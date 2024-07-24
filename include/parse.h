@@ -22,9 +22,9 @@ void			push(t_linkedlist *linkedlist, void *content);
 void			*pop(t_linkedlist *linkedlist);
 
 // data_struct_free.c
-void	free_linkedlist(t_linkedlist *linkedlist);
+void			free_linkedlist(t_linkedlist *linkedlist);
 
 // parse.c
-int	parse(char *line);
+int				parse(char *line);
 
 #endif
