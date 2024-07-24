@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/18 02:06:34 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/24 20:15:09 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <termcap.h>			// tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 # include <readline/readline.h>	// readline, rl_clear_history, rl_on_new_line, rl_replace_line, rl_redisplay
 # include <readline/history.h>	// add_history
+
+# include "data.h"
+# include "parse.h"
 
 # define FALSE 0
 # define TRUE 1
