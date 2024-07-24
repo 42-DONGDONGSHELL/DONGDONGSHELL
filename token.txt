@@ -1,0 +1,13 @@
+token | token | token -> token list
+
+t_token
+{
+    head(cmd) : echo;
+    argv(literal) : ["echo", hi, hello]
+    envp : main 환경변수
+    file_list (redirection)
+    {
+        file_path : "a.txt"
+        redirection_type : "<", "<<", ">", ">>"
+    }
+}
