@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   data_struct.c                                      :+:      :+:    :+:   */
+/*   data_struct_.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:37:08 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/24 20:14:18 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/25 19:21:57 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_node	*create_node(void *content)
 	if (!new_node)
 		exit(EXIT_FAILURE);
 	new_node->content = content;
+	new_node->prev = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -49,38 +50,22 @@ void	push(t_linkedlist *linkedlist, void *content)
 	}
 	else
 	{
+		new_node->prev = linkedlist->tail;
 		linkedlist->tail->next = new_node;
 		linkedlist->tail = new_node;
 	}
 	linkedlist->size++;
 }
 
-static t_node	*prev_tail_node(t_linkedlist *linkedlist)
-{
-	t_node	*prev;
-	t_node	*current;
-
-	prev = NULL;
-	current = linkedlist->head;
-	while (current->next != NULL)
-	{
-		prev = current;
-		current = current->next;
-	}
-	return (prev);
-}
-
 void	*pop(t_linkedlist *linkedlist)
 {
-	t_node		*prev;
-	t_node		*tail_node;
 	void		*content;
+	t_node		*pop_node;
 
 	if (linkedlist->size == 0)
 		return (NULL);
-	prev = prev_tail_node(linkedlist);
-	tail_node = linkedlist->tail;
-	content = tail_node->content;
+	content = linkedlist->tail->content;
+	pop_node = linkedlist->tail;
 	if (linkedlist->size == 1)
 	{
 		linkedlist->head = NULL;
@@ -88,10 +73,10 @@ void	*pop(t_linkedlist *linkedlist)
 	}
 	else
 	{
-		prev->next = NULL;
-		linkedlist->tail = prev;
+		linkedlist->tail = pop_node->prev;
+		linkedlist->tail->next = NULL;
 	}
-	free(tail_node);
+	free(pop_node);
 	linkedlist->size--;
 	return (content);
 }
