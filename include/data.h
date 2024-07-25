@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/24 20:14:53 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/25 18:19:27 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 typedef struct s_node
 {
 	void			*content;
+	struct s_node	*prev;
 	struct s_node	*next;
 }	t_node;
 
