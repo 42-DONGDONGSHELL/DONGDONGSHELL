@@ -8,10 +8,12 @@ READLINE = -lreadline
 
 NAME = minishell
 
-PARSE = ./src/parse/parse.c \
+PARSE = ./src/parse/parse.c ./src/parse/data_struct.c ./src/parse/data_struct_free.c
+
 
 SRCS = 	./src/main.c \
 		$(PARSE) \
+		$(DATA) \
 
 OBJS = ${SRCS:.c=.o}
 

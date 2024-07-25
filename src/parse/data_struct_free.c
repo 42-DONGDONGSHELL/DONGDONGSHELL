@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   data_struct_free.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/24 20:15:37 by drhee            ###   ########.fr       */
+/*   Created: 2024/07/24 19:52:22 by drhee             #+#    #+#             */
+/*   Updated: 2024/07/24 20:15:24 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/parse.h"
 
-int	main(int argc, char *argv[], char **envp)
+void	free_linkedlist(t_linkedlist *linkedlist)
 {
-	char	*line;
+	t_node	*head_node;
+	t_node	*prev_node;
+	int		i;
 
-	(void) argc;
-	(void) argv;
-	(void) envp;
-	while (1)
+	if (linkedlist == NULL)
+		return ;
+	if (linkedlist->size == 0)
 	{
-		line = readline("minishell$ ");
-		parse(line);
-		free(line);
+		free(linkedlist);
+		return ;
 	}
+	head_node = linkedlist->head;
+	i = 0;
+	while (i < linkedlist->size)
+	{
+		prev_node = head_node->next;
+		free(head_node);
+		head_node = prev_node;
+		i++;
+	}
+	free(linkedlist);
 }
