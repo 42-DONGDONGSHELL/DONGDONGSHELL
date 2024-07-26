@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/builtin.h"
 
 int	ft_cd(char *path, char **envv)
 {
