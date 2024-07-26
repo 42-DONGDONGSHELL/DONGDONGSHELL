@@ -9,11 +9,12 @@ READLINE = -lreadline
 NAME = minishell
 
 PARSE = ./src/parse/parse.c ./src/parse/data_struct_.c ./src/parse/data_struct_free.c
-
+BUILTIN = ./src/builtin/ft_cd.c ./src/builtin/ft_echo.c ./src/builtin/ft_env.c ./src/builtin/ft_export.c ./src/builtin/ft_pwd.c ./src/builtin/ft_unset.c
 
 SRCS = 	./src/main.c \
 		$(PARSE) \
 		$(DATA) \
+		$(BUILTIN) \
 
 OBJS = ${SRCS:.c=.o}
 
