@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/25 18:19:27 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/27 22:33:52 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ typedef struct s_node
 	struct s_node	*prev;
 	struct s_node	*next;
 }	t_node;
+
+typedef struct s_envp
+{
+	char			*key;
+	char			*value;
+}	t_envp;
 
 typedef struct s_linkedlist
 {

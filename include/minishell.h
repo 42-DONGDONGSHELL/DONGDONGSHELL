@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/24 20:15:09 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/28 04:23:12 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,8 @@
 # define TRUE 1
 # define ERROR 1
 # define SUCCESS 0
+
+void	safe_free(void** ptr);
+void	*safe_malloc(size_t size);
 
 #endif

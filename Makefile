@@ -8,10 +8,14 @@ READLINE = -lreadline
 
 NAME = minishell
 
-PARSE = ./src/parse/parse.c ./src/parse/data_struct_.c ./src/parse/data_struct_free.c
-
+PARSE = ./src/parse/parse.c \
+		./src/parse/data_struct_.c \
+		./src/parse/data_struct_free.c \
+		./src/parse/envp.c \
+		./src/parse/ft_envsubst.c \
 
 SRCS = 	./src/main.c \
+		./src/utils.c \
 		$(PARSE) \
 		$(DATA) \
 

@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 19:52:22 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/24 20:15:24 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/28 04:28:02 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_linkedlist(t_linkedlist *linkedlist)
 		return ;
 	if (linkedlist->size == 0)
 	{
-		free(linkedlist);
+		safe_free((void**) &linkedlist);
 		return ;
 	}
 	head_node = linkedlist->head;
@@ -30,9 +30,9 @@ void	free_linkedlist(t_linkedlist *linkedlist)
 	while (i < linkedlist->size)
 	{
 		prev_node = head_node->next;
-		free(head_node);
+		safe_free((void**) &head_node);
 		head_node = prev_node;
 		i++;
 	}
-	free(linkedlist);
+	safe_free((void**) &linkedlist);
 }

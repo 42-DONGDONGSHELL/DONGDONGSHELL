@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/28 04:27:18 by drhee            ###   ########.fr       */
+/*   Created: 2024/07/28 04:15:37 by drhee             #+#    #+#             */
+/*   Updated: 2024/07/28 04:19:12 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void safe_free(void** ptr)
 {
-	char	*line;
-
-	(void) argc;
-	(void) argv;
-	while (1)
+	if (ptr != NULL && *ptr != NULL)
 	{
-		line = readline("minishell$ ");
-		parse(line, envp);
-		safe_free((void**) &line);
+		free(*ptr);
+		*ptr = NULL;
 	}
+}
+
+void* safe_malloc(size_t size)
+{
+	void	*ptr;
+
+	ptr = malloc(size);
+	if (ptr == NULL)
+		exit(EXIT_FAILURE);
+	return (ptr);
 }

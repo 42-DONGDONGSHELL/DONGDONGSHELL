@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:37:08 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/25 19:21:57 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/28 04:27:46 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ t_linkedlist	*create_linkedlist(void)
 {
 	t_linkedlist	*linkedlist;
 
-	linkedlist = (t_linkedlist *)malloc(sizeof(t_linkedlist));
-	if (!linkedlist)
-		exit(EXIT_FAILURE);
+	linkedlist = (t_linkedlist *)safe_malloc(sizeof(t_linkedlist));
 	linkedlist->head = NULL;
 	linkedlist->tail = NULL;
 	linkedlist->size = 0;
@@ -29,9 +27,7 @@ t_node	*create_node(void *content)
 {
 	t_node	*new_node;
 
-	new_node = (t_node *)malloc(sizeof(t_node));
-	if (!new_node)
-		exit(EXIT_FAILURE);
+	new_node = (t_node *)safe_malloc(sizeof(t_node));
 	new_node->content = content;
 	new_node->prev = NULL;
 	new_node->next = NULL;
@@ -76,7 +72,26 @@ void	*pop(t_linkedlist *linkedlist)
 		linkedlist->tail = pop_node->prev;
 		linkedlist->tail->next = NULL;
 	}
-	free(pop_node);
+	safe_free((void**) &pop_node);
 	linkedlist->size--;
 	return (content);
+}
+
+char	*linkedlist_to_str(t_linkedlist *linkedlist)	//free 필요
+{
+	char	*str;
+	t_node	*node;
+	int		i;
+
+	str = (char *)safe_malloc(sizeof(char) * (linkedlist->size + 1));
+	node = linkedlist->head;
+	i = 0;
+	while (node)
+	{
+		str[i] = *((char *)node->content);
+		node = node->next;
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
