@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   data_struct.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 14:28:05 by drhee            ###   ########.fr       */
+/*   Created: 2024/07/31 07:31:34 by drhee             #+#    #+#             */
+/*   Updated: 2024/07/31 07:42:52 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
+#ifndef DATA_STRUCT_H
+# define DATA_STRUCT_H
 
-int	parse(char *line, char **envp)
-{
-	char	*envsubst_line;
-	t_envp	*envp_dict;
+# include "minishell.h"
 
-	envp_dict = create_envp_dict(envp);
-	envsubst_line = envsubst(line, envp_dict);
-	if (!envsubst_line)
-	{
-		free_envp_dict(envp_dict);
-		return (1);
-	}
-	printf("%s\n", envsubst_line);
-	free_envp_dict(envp_dict);
-	safe_free((void **) &envsubst_line);
-	return (0);
-}
+// data_struct.c
+t_linkedlist	*create_linkedlist(void);
+t_node			*create_node(void *content);
+void			push(t_linkedlist *linkedlist, void *content);
+void			*pop(t_linkedlist *linkedlist);
+
+// data_struct_utils.c
+char			*linkedlist_to_str(t_linkedlist *linkedlist);
+void			free_linkedlist(t_linkedlist *linkedlist);
+
+#endif

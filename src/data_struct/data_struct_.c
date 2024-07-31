@@ -6,11 +6,11 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:37:08 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/28 04:27:46 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/31 12:05:01 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
+#include "../../include/data_struct.h"
 
 t_linkedlist	*create_linkedlist(void)
 {
@@ -20,6 +20,8 @@ t_linkedlist	*create_linkedlist(void)
 	linkedlist->head = NULL;
 	linkedlist->tail = NULL;
 	linkedlist->size = 0;
+	linkedlist->pid = NULL;
+	linkedlist->token_cnt = 0;
 	return (linkedlist);
 }
 
@@ -72,26 +74,7 @@ void	*pop(t_linkedlist *linkedlist)
 		linkedlist->tail = pop_node->prev;
 		linkedlist->tail->next = NULL;
 	}
-	safe_free((void**) &pop_node);
+	safe_free((void **) &pop_node);
 	linkedlist->size--;
 	return (content);
-}
-
-char	*linkedlist_to_str(t_linkedlist *linkedlist)	//free 필요
-{
-	char	*str;
-	t_node	*node;
-	int		i;
-
-	str = (char *)safe_malloc(sizeof(char) * (linkedlist->size + 1));
-	node = linkedlist->head;
-	i = 0;
-	while (node)
-	{
-		str[i] = *((char *)node->content);
-		node = node->next;
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 16:16:03 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/28 04:28:51 by drhee            ###   ########.fr       */
+/*   Updated: 2024/07/31 11:52:25 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	free_envp_dict(t_envp *envp_dict)
 	i = 0;
 	while (envp_dict[i].key)
 	{
-		safe_free((void**) &envp_dict[i].key);
-		safe_free((void**) &envp_dict[i].value);
+		safe_free((void **) &envp_dict[i].key);
+		safe_free((void **) &envp_dict[i].value);
 		i++;
 	}
-	safe_free((void**) &envp_dict);
+	safe_free((void **) &envp_dict);
 }
 
 char	**split_envp(char *str)
@@ -71,10 +71,12 @@ char	**split_envp(char *str)
 	ft_strlcpy(s2[0], str, key_len + 1);
 	s2[0][key_len] = '\0';
 	ft_strlcpy(s2[1], delimiter + 1, value_len + 1);
+	s2[1][value_len] = '\0';
 	return (s2);
 }
 
-t_envp	*create_envp_dict(char **envp) //환경변수 [{key,value}, ...] 생성
+//환경변수 [{key,value}, ...] 생성
+t_envp	*create_envp_dict(char **envp)
 {
 	t_envp	*envp_dict;
 	char	**splited_envp;
@@ -83,19 +85,19 @@ t_envp	*create_envp_dict(char **envp) //환경변수 [{key,value}, ...] 생성
 	i = 0;
 	while (envp[i])
 		i++;
-	envp_dict = (t_envp *)safe_malloc(sizeof(t_envp) * (i + 1));
-	if (!envp_dict)
-		exit(EXIT_FAILURE);
+	envp_dict = (t_envp *)safe_malloc(sizeof(t_envp) * (i + 2));
 	i = 0;
+	envp_dict[i].key = ft_strdup("?");
+	envp_dict[i].value = ft_itoa(g_exit_code);
 	while (envp[i])
 	{
 		splited_envp = split_envp(envp[i]);
-		envp_dict[i].key = splited_envp[0];
-		envp_dict[i].value = splited_envp[1];
-		safe_free((void**) &splited_envp);
+		envp_dict[i + 1].key = splited_envp[0];
+		envp_dict[i + 1].value = splited_envp[1];
+		safe_free((void **) &splited_envp);
 		i++;
 	}
-	envp_dict[i].key = NULL;
-	envp_dict[i].value = NULL;
+	envp_dict[i + 1].key = NULL;
+	envp_dict[i + 1].value = NULL;
 	return (envp_dict);
 }
