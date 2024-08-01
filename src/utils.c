@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 04:15:37 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 11:51:13 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/01 22:24:22 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,11 @@ void	*safe_malloc(size_t size)
 	if (ptr == NULL)
 		exit(EXIT_FAILURE);
 	return (ptr);
+}
+
+int	is_whitespace(char c)
+{
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
 }

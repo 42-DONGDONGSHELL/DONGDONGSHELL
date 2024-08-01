@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 07:44:16 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/01 22:24:32 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ enum	e_token
 
 void	safe_free(void **ptr);
 void	*safe_malloc(size_t size);
+int		is_whitespace(char c);
 
 #endif
