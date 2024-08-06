@@ -22,11 +22,15 @@ t_envp			*create_envp_dict(char **envp);
 
 // envsubst.c
 char			*envsubst_heredoc(char *line, t_envp *envp_dict);
-char			*envsubst(char *line, t_envp *envp_dict, char *home);
+char			*envsubst(char *line, t_env_h *env_data);
 
 // parse.c
 int				parse(char *line, char **envp, char *home);
 
 int				is_in_quotes(const char *str, const char *target_addr);
+
+// parse_operator.c
+int				is_operator(char c);
+t_linkedlist	*parse_operator(char *line);
 
 #endif

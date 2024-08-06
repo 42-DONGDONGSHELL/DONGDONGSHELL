@@ -48,6 +48,12 @@ typedef struct s_envp
 	char			*value;
 }	t_envp;
 
+typedef struct s_env_h
+{
+	char	*home;
+	t_envp	*envp_dict;
+}	t_env_h;
+
 typedef struct s_quote
 {
 	int				s_quote;

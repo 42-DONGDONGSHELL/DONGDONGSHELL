@@ -12,7 +12,7 @@
 
 #include "../../include/parse.h"
 
-void	push_env_value_to_list(t_linkedlist *line_list, char *envp_value)
+void	push_env_value(t_linkedlist *line_list, char *envp_value)
 {
 	int	j;
 
@@ -66,7 +66,7 @@ int	push_envp(char **line, int *i, t_linkedlist *line_list, t_envp *envp_dict)
 	safe_free((void **) &envp_key);
 	if (!envp_value)
 		return (0);
-	push_env_value_to_list(line_list, envp_value);
+	push_env_value(line_list, envp_value);
 	return (0);
 }
 
@@ -112,7 +112,7 @@ char	*envsubst(char *line, t_envp *envp_dict)
 		}
 		else if (line[i] == '~' && !is_in_quotes(line, &(line[i])))
 		{
-			push_env_value_to_list(line_list, find_envp_value(envp_dict, "HOME"));
+			push_env_value(line_list, find_envp_value(envp_dict, "HOME"));
 			i++;
 		}
 		else

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   envsubst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/01 18:08:17 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/01 22:57:26 by drhee            ###   ########.fr       */
+/*   Created: 2024-08-01 17:34:18 by drhee             #+#    #+#             */
+/*   Updated: 2024-08-01 17:34:18 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-void	push_env_value_to_list(t_linkedlist *line_list, char *envp_value)
+void	push_env_value(t_linkedlist *line_list, char *envp_value)
 {
 	int	j;
 
@@ -24,7 +24,7 @@ void	push_env_value_to_list(t_linkedlist *line_list, char *envp_value)
 	}
 }
 
-int	handle_dollar_expansion(char *line, int *i, t_linkedlist *line_list, t_envp *envp_dict)
+int	expand_dlr(char *line, int *i, t_linkedlist *line_list, t_envp *envp_dict)
 {
 	t_linkedlist	*envp_key_list;
 	char			*envp_key;
@@ -47,25 +47,26 @@ int	handle_dollar_expansion(char *line, int *i, t_linkedlist *line_list, t_envp 
 		envp_value = find_envp_value(envp_dict, envp_key);
 		safe_free((void **) &envp_key);
 		if (envp_value)
-			push_env_value_to_list(line_list, envp_value);
+			push_env_value(line_list, envp_value);
 		return (1);
 	}
 	return (0);
 }
 
-int	handle_tilde_expansion(char *line, int *i, char *home, t_linkedlist *line_list, t_envp *envp_dict)
+int	expand_tld(char *line, int *i, t_linkedlist *line_list, t_env_h *env_h)
 {
 	char	*envp_value;
 
-	envp_value = find_envp_value(envp_dict, "HOME");
+	envp_value = find_envp_value(env_h->envp_dict, "HOME");
 	if (*i == 0 || is_whitespace(line[*i - 1]))
 	{
-		if (line[*i + 1] == '/' || line[*i + 1] == '\0' || is_whitespace(line[*i + 1]))
+		if (line[*i + 1] == '/' || line[*i + 1] == '\0' \
+			|| is_whitespace(line[*i + 1]))
 		{
 			if (envp_value)
-				push_env_value_to_list(line_list, envp_value);
+				push_env_value(line_list, envp_value);
 			else
-				push_env_value_to_list(line_list, home);
+				push_env_value(line_list, env_h->home);
 			(*i)++;
 			return (1);
 		}
@@ -73,7 +74,7 @@ int	handle_tilde_expansion(char *line, int *i, char *home, t_linkedlist *line_li
 	return (0);
 }
 
-char	*envsubst(char *line, t_envp *envp_dict, char *home)
+char	*envsubst(char *line, t_env_h *env_h)
 {
 	t_linkedlist	*line_list;
 	char			*envsubst_line;
@@ -85,12 +86,12 @@ char	*envsubst(char *line, t_envp *envp_dict, char *home)
 	{
 		if (line[i] == '$' && is_in_quotes(line, &(line[i])) != 1)
 		{
-			if (handle_dollar_expansion(line, &i, line_list, envp_dict) == 1)
+			if (expand_dlr(line, &i, line_list, env_h->envp_dict) == 1)
 				continue ;
 		}
 		else if (line[i] == '~' && is_in_quotes(line, &(line[i])) == 0)
 		{
-			if (handle_tilde_expansion(line, &i, home, line_list, envp_dict) == 1)
+			if (expand_tld(line, &i, line_list, env_h) == 1)
 				continue ;
 		}
 		push(line_list, &(line[i]));
@@ -113,7 +114,7 @@ char	*envsubst_heredoc(char *line, t_envp *envp_dict)
 	{
 		if (line[i] == '$')
 		{
-			if (handle_dollar_expansion(line, &i, line_list, envp_dict) == 1)
+			if (expand_dlr(line, &i, line_list, envp_dict) == 1)
 				continue ;
 		}
 		push(line_list, &(line[i]));

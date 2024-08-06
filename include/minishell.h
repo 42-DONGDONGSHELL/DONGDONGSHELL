@@ -56,5 +56,6 @@ enum	e_token
 void	safe_free(void **ptr);
 void	*safe_malloc(size_t size);
 int		is_whitespace(char c);
+int		is_str_whitespace(char *str);
 
 #endif

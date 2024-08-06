@@ -14,6 +14,7 @@ DATA_STRUCT =	./src/data_struct/data_struct_.c \
 PARSE =	./src/parse/parse.c \
 		./src/parse/envp.c \
 		./src/parse/envsubst.c \
+		./src/parse/parse_operator.c \
 		./src/parse/quote.c
 
 SRCS =	./src/main.c \

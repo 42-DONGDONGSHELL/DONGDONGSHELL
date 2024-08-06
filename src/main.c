@@ -25,11 +25,11 @@ char	*set_home(char **envp)
 	return (home);
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	char	*home;
+
 	(void) argc;
 	(void) argv;
 	home = set_home(envp);
