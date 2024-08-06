@@ -6,66 +6,125 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/01 21:23:45 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/06 21:10:12 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-t_linkedlist *trim_list(t_linkedlist *list)
+char	*trim_whitespace(const char* str)
 {
-	t_linkedlist	*new_list;
-	t_node			*now;
+	const char* start;
+	const char* end;
+	char* trimmed_str;
+	size_t new_length;
 
-	new_list = create_linkedlist();
-	now = list->head;
-	while (now)
-	{
-		if (*(char *)now->content != ' ')
-			push(new_list, now->content);
-		now = now->next;
-	}
-	return (new_list);
+	if (str == NULL)
+		return NULL;
+	start = str;
+	end = str + ft_strlen(str) - 1;
+	while (is_whitespace(*start))
+		start++;
+	while (end > start && is_whitespace(*end))
+		end--;
+	new_length = end - start + 1;
+	trimmed_str = (char *)safe_malloc(new_length + 1);
+	ft_strlcpy(trimmed_str, start, new_length + 1);
+	return (trimmed_str);
 }
 
-int	parse(char *line, char **envp, char *home)
+t_linkedlist	*trim_list(t_linkedlist *parsed_list)
+{
+	t_linkedlist	*trimmed_list;
+	t_node			*now;
+	char			*trimmed_str;
+
+	trimmed_list = create_linkedlist();
+	now = parsed_list->head;
+	while (now)
+	{
+		if (!is_str_whitespace((char *)now->content))
+		{
+			trimmed_str = trim_whitespace((char *)now->content);
+			push(trimmed_list, trimmed_str);
+			trimmed_list->tail->type = now->type;
+		}
+		safe_free((void **) &now->content);
+		now = now->next;
+	}
+	return (trimmed_list);
+}
+
+int	consecutive_operator(t_linkedlist *trimmed_list)
+{
+	t_node	*now;
+	int		return_flag;
+
+	return_flag = 0;
+	now = trimmed_list->head;
+	while (now)
+	{
+		if ((now->type != 0) && (now->next == NULL || now->next->type != 0))
+		{
+			return_flag = 1;
+			break ;
+		}
+		now = now->next;
+	}
+	now = trimmed_list->head;
+	if (return_flag)
+	{
+		while (now)
+		{
+			safe_free((void **) &now->content);
+			now = now->next;
+		}
+	}
+	return (return_flag);
+}
+
+int	parse(char *line, t_linkedlist *token_list,char **envp, char *home)
 {
 	t_envp			*envp_dict;
 	t_env_h			env_h;
 	t_linkedlist	*parsed_list;
+	t_linkedlist	*trimmed_list;
 	t_linkedlist	*envsubst_list;
 	t_node			*now;
 
+	(void)token_list;
+	parsed_list = parse_operator(line);
+	trimmed_list = trim_list(parsed_list);
+	free_linkedlist(parsed_list);
+	if (consecutive_operator(trimmed_list))
+	{
+		free_linkedlist(trimmed_list);
+		return (1);
+	}
 	envp_dict = create_envp_dict(envp);
 	env_h.envp_dict = envp_dict;
 	env_h.home = home;
-	parsed_list = parse_operator(line);
 	envsubst_list = create_linkedlist();
-	now = parsed_list->head;
+	now = trimmed_list->head;
 	while (now)
 	{
-
-		if (!is_operator(*(char *)now->content))
-		{
-			push(envsubst_list, envsubst(now->content, &env_h));
-			printf("token:%s\n", (char *)envsubst_list->tail->content);
-		}
-		else
-		{
-			push(envsubst_list, ft_strdup((char *)now->content));
-			printf("operator:%s\n", (char *)envsubst_list->tail->content);
-		}
-		free(now->content);
+		push(envsubst_list, envsubst((char *)now->content, &env_h));
+		envsubst_list->tail->type = now->type;
+		safe_free((void **) &now->content);
 		now = now->next;
 	}
+
 	now = envsubst_list->head;
 	while (now)
 	{
-		free(now->content);
+		printf("content: %s\n", (char *)now->content);
+		printf("type: %d\n", now->type);
+		safe_free((void **) &now->content);
 		now = now->next;
 	}
+
 	free_envp_dict(envp_dict);
-	free_linkedlist(parsed_list);
+	free_linkedlist(trimmed_list);
 	free_linkedlist(envsubst_list);
 	return (0);
 }

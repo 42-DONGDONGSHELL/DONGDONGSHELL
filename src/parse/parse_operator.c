@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:44:33 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 11:52:44 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/06 20:32:19 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_linkedlist	*parse_operator(char *line)
 			if (i > start)
 				push_command(parsed_list, line, start, i);
 			push(parsed_list, operator);
+			parsed_list->tail->type = check_operators(&line[i]);
 			i += ft_strlen(operator) - 1;
 			start = i + 1;
 		}
@@ -96,3 +97,4 @@ t_linkedlist	*parse_operator(char *line)
 	push_command(parsed_list, line, start, i);
 	return (parsed_list);
 }
+

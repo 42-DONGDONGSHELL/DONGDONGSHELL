@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:37:08 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 12:05:01 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/06 19:27:05 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_node	*create_node(void *content)
 	new_node->content = content;
 	new_node->prev = NULL;
 	new_node->next = NULL;
+	new_node->type = 0;
 	return (new_node);
 }
 

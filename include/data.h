@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 14:05:20 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/06 22:05:29 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_node
 	void			*content;
 	struct s_node	*prev;
 	struct s_node	*next;
+	int				type;
 }	t_node;
 
 typedef struct s_linkedlist
@@ -36,7 +37,7 @@ typedef struct s_token
 	char			*cmd;
 	char			**argv;
 	int				argc;
-	struct s_evp	*envp;
+	struct t_envp	*envp;
 	struct t_node	*file_list;
 	t_linkedlist	*list_info;
 

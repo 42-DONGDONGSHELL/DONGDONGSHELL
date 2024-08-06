@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/01 22:24:32 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/06 21:31:06 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ extern int	g_exit_code;
 
 enum	e_token
 {
-	PARSE_ERROR = 0,
+	ETC = 0,
 	PIPE = 1,
 	OUTPUT = 2,
 	APPEND_OUTPUT = 3,
