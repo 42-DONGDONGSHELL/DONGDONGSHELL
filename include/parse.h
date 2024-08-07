@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:53:44 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/06 20:00:20 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/07 21:43:49 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int				is_operator(char c);
 t_linkedlist	*parse_operator(char *line);
 
 // parse.c
-int				parse(char *line, t_linkedlist *token_list,char **envp, char *home);
+t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home);
+
+// token.c
+t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, t_envp *envp);
+
+void 			print_token(t_linkedlist *token_list);
 
 #endif

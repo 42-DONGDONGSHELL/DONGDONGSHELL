@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/06 21:10:12 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/07 22:18:02 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_linkedlist	*trim_list(t_linkedlist *parsed_list)
 	return (trimmed_list);
 }
 
-int	consecutive_operator(t_linkedlist *trimmed_list)
+int	consecutive_operator_check(t_linkedlist *trimmed_list)
 {
 	t_node	*now;
 	int		return_flag;
@@ -83,7 +83,8 @@ int	consecutive_operator(t_linkedlist *trimmed_list)
 	return (return_flag);
 }
 
-int	parse(char *line, t_linkedlist *token_list,char **envp, char *home)
+
+t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home)
 {
 	t_envp			*envp_dict;
 	t_env_h			env_h;
@@ -92,14 +93,13 @@ int	parse(char *line, t_linkedlist *token_list,char **envp, char *home)
 	t_linkedlist	*envsubst_list;
 	t_node			*now;
 
-	(void)token_list;
 	parsed_list = parse_operator(line);
 	trimmed_list = trim_list(parsed_list);
 	free_linkedlist(parsed_list);
-	if (consecutive_operator(trimmed_list))
+	if (consecutive_operator_check(trimmed_list))
 	{
 		free_linkedlist(trimmed_list);
-		return (1);
+		return (NULL);
 	}
 	envp_dict = create_envp_dict(envp);
 	env_h.envp_dict = envp_dict;
@@ -113,18 +113,16 @@ int	parse(char *line, t_linkedlist *token_list,char **envp, char *home)
 		safe_free((void **) &now->content);
 		now = now->next;
 	}
-
+	free_linkedlist(trimmed_list);
+	token_list = create_token_list(envsubst_list, envp_dict);
+	print_token(token_list);
 	now = envsubst_list->head;
 	while (now)
 	{
-		printf("content: %s\n", (char *)now->content);
-		printf("type: %d\n", now->type);
 		safe_free((void **) &now->content);
 		now = now->next;
 	}
-
 	free_envp_dict(envp_dict);
-	free_linkedlist(trimmed_list);
 	free_linkedlist(envsubst_list);
-	return (0);
+	return (token_list);
 }

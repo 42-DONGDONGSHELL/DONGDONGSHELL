@@ -15,7 +15,10 @@ PARSE =	./src/parse/parse.c \
 		./src/parse/envp.c \
 		./src/parse/envsubst.c \
 		./src/parse/parse_operator.c \
-		./src/parse/quote.c
+		./src/parse/quote.c \
+		./src/parse/token.c \
+		./src/parse/free_token.c \
+		./src/print_token.c \
 
 SRCS =	./src/main.c \
 		./src/utils.c \
