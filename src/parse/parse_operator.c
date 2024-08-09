@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:44:33 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/06 20:32:19 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 19:22:48 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	push_command(t_linkedlist *parsed_list, char *line, int start, int end)
 {
 	char	*command;
 
-	command = ft_substr(line, start, end - start);
+	command = ft_safe_substr(line, start, end - start);
 	push(parsed_list, command);
 }
 

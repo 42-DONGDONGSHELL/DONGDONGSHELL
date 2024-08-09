@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 17:10:43 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 19:23:01 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ void	push_argv(t_linkedlist *argv_list, char *str)
 	{
 		if (is_whitespace(str[i]) && !is_in_quotes(str, &str[i]))
 		{
-			push(argv_list, ft_substr(str, start, i - start));
+			push(argv_list, ft_safe_substr(str, start, i - start));
 			start = i + 1;
 		}
 		i++;
 	}
-	push(argv_list, ft_substr(str, start, i - start));
+	push(argv_list, ft_safe_substr(str, start, i - start));
 }
 
 void	push_file(t_node **start, t_linkedlist *file_list)
 {
-	push(file_list, ft_strdup((*start)->content));
+	push(file_list, ft_safe_strdup((*start)->content));
 	file_list->tail->type = (*start)->type;
-	push(file_list, ft_strdup((*start)->next->content));
+	push(file_list, ft_safe_strdup((*start)->next->content));
 	file_list->tail->type = (*start)->type;
 	*start = (*start)->next;
 }

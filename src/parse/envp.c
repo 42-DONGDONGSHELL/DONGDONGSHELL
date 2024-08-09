@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 16:16:03 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 11:52:25 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 19:22:02 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_envp	*create_envp_dict(char **envp)
 		i++;
 	envp_dict = (t_envp *)safe_malloc(sizeof(t_envp) * (i + 2));
 	i = 0;
-	envp_dict[i].key = ft_strdup("?");
+	envp_dict[i].key = ft_safe_strdup("?");
 	envp_dict[i].value = ft_itoa(g_exit_code);
 	while (envp[i])
 	{

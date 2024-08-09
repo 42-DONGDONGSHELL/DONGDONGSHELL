@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 17:29:41 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 19:37:55 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*set_home(char **envp)
 	char	*home;
 
 	envp_dict = create_envp_dict(envp);
-	home = ft_strdup(find_envp_value(envp_dict, "HOME"));
+	home = ft_safe_strdup(find_envp_value(envp_dict, "HOME"));
 	free_envp_dict(envp_dict);
 	return (home);
 }
@@ -30,19 +30,22 @@ int	main(int argc, char **argv, char **envp)
 	t_linkedlist	*token_list;
 	char			*line;
 	char			*home;
+	char 			**envp_copy;
 
 	(void) argc;
 	(void) argv;
 	home = set_home(envp);
+	envp_copy = ft_envpdup(envp);
 	while (1)
 	{
 		token_list = NULL;
 		line = readline("minishell$ ");
-		token_list = parse(line, token_list, envp, home);
+		token_list = parse(line, token_list, envp_copy, home);
 		if (token_list == NULL)
 			continue;
 		safe_free((void **) &line);
 		free_token_list(token_list);
 	}
+	free_envp(envp_copy);
 	safe_free((void **) &home);
 }

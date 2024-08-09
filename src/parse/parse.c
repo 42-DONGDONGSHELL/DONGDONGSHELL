@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 17:28:03 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 19:22:28 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,20 @@ t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home
 	now = trimmed_list->head;
 	while (now)
 	{
-		push(envsubst_list, envsubst((char *)now->content, &env_h));
-		envsubst_list->tail->type = now->type;
-		safe_free((void **) &now->content);
-		now = now->next;
+		if (now->prev && now->prev->type == HEREDOC)
+		{
+			push(envsubst_list, ft_safe_strdup((char *)now->content));
+			envsubst_list->tail->type = now->type;
+			safe_free((void **) &now->content);
+			now = now->next;
+		}
+		else
+		{
+			push(envsubst_list, envsubst((char *)now->content, &env_h));
+			envsubst_list->tail->type = now->type;
+			safe_free((void **) &now->content);
+			now = now->next;
+		}
 	}
 	free_linkedlist(trimmed_list);
 	token_list = create_token_list(envsubst_list, envp);

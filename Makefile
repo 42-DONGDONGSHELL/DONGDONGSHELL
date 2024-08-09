@@ -22,6 +22,7 @@ PARSE =	./src/parse/parse.c \
 
 SRCS =	./src/main.c \
 		./src/utils.c \
+		./src/ft_utils.c \
 		$(PARSE) \
 		$(DATA) \
 		$(DATA_STRUCT) \

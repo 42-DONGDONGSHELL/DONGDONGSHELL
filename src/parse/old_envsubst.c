@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 21:07:16 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/01 22:25:19 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 19:22:10 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	is_valid_key_start(char c, t_linkedlist *line_list, int is_here_doc)
 	}
 	if (!(isalpha(c) || c == '_' || c == '?') && is_here_doc)
 	{
-		str = ft_strdup("$");
+		str = ft_safe_strdup("$");
 		push(line_list, str);
 		return (0);
 	}

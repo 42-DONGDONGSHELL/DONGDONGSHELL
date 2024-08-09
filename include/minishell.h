@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/07 21:30:50 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 19:37:29 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,11 @@ void	safe_free(void **ptr);
 void	*safe_malloc(size_t size);
 int		is_whitespace(char c);
 int		is_str_whitespace(char *str);
-void 			free_token_list(t_linkedlist *token_list);
+void	free_token_list(t_linkedlist *token_list);
+
+char	*ft_safe_strdup(const char *s1);
+char	*ft_safe_substr(char const *s, unsigned int start, size_t len);
+char	**ft_envpdup(char **envp);
+void	free_envp(char **envp_copy);
 
 #endif
