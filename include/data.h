@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/08 15:34:50 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/09 17:08:52 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_node
 	void			*content;
 	struct s_node	*prev;
 	struct s_node	*next;
-	int				type; // ETC = 0, PIPE = 1, OUTPUT = 2, APPEND_OUTPUT = 3, INPUT = 4, HEREDOC = 5, REDIRECT = 6
+	int				type;
 }	t_node;
 
 typedef struct s_linkedlist
@@ -43,7 +43,7 @@ typedef struct s_token
 	char			*cmd;
 	char			**argv;
 	int				argc;
-	t_envp			*envp;
+	char			**envp;
 	t_node			*file_head;
 	t_linkedlist	*file_list;
 	t_linkedlist	*list_info;

@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/08 15:33:54 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:30:50 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # include <readline/history.h>	// add_history
 
 # include "data.h"
+# include "data_struct.h"
 # include "parse.h"
 
 extern int	g_exit_code;
