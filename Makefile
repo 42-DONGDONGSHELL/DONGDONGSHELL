@@ -10,11 +10,13 @@ NAME = minishell
 
 PARSE = ./src/parse/parse.c ./src/parse/data_struct_.c ./src/parse/data_struct_free.c
 BUILTIN = ./src/builtin/ft_cd.c ./src/builtin/ft_echo.c ./src/builtin/ft_env.c ./src/builtin/ft_export.c ./src/builtin/ft_pwd.c ./src/builtin/ft_unset.c
+EXECUTE = ./src/execute/execute.c ./src/execute/heredoc.c ./src/execute/redirect.c ./src/execute/run_builtin.c ./src/execute/run_cmd.c
 
 SRCS = 	./src/main.c \
 		$(PARSE) \
 		$(DATA) \
 		$(BUILTIN) \
+		$(EXECUTE) \
 
 OBJS = ${SRCS:.c=.o}
 

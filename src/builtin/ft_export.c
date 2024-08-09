@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:55 by dongclee          #+#    #+#             */
-/*   Updated: 2024/07/24 16:13:56 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:55:30 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,24 @@ int	ft_export(char *str, char ***envv)
 	free(*envv);
 	*envv = new_envv;
 	return (SUCCESS);
+}
+
+int	execute_export(t_token *token)
+{
+	int	i;
+	int	ret;
+
+	i = 1;
+	ret = 0;
+	while (token->argv[i])
+	{
+		ret = ft_export(token->argv[i], &token->envp);
+		if (ret == 1)
+		{
+			// todo : print ERROR;
+			return (ERROR);
+			break;
+		}
+	}
+	 return (SUCCESS);
 }

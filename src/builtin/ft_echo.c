@@ -38,7 +38,7 @@ int	has_option(char **argv, int *p_idx)
 	return (op);
 }
 
-int	ft_echo(t_token *token)
+int	execute_echo(t_token *token)
 {
 	int	idx;
 	int	option;

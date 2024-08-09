@@ -12,7 +12,7 @@
 
 #include "../../include/minishell.h"
 
-void	migrate_except_deleted(char ***rtn, char **envp, char *del)
+int	migrate_except_deleted(char ***rtn, char **envp, char *del)
 {
 	int	i;
 	int	j;
@@ -32,15 +32,16 @@ void	migrate_except_deleted(char ***rtn, char **envp, char *del)
 				free((*rtn)[j]);
 			free(*rtn);
 			*rtn = NULL;
-			return ;
+			return (ERROR);
 		}
 		i++;
 		j++;
 	}
 	(*rtn)[j] = NULL;
+	return (SUCCESS);
 }
 
-char	**create_new_envv(char **envp, char *del, int *is_contained)
+char	**create_new_envv(char **envp, char *del)
 {
 	char	**new;
 	size_t	i;
@@ -48,16 +49,19 @@ char	**create_new_envv(char **envp, char *del, int *is_contained)
 
 	del_len = ft_strlen(del);
 	i = 0;
-	*is_contained = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], del, del_len) == 0 && envp[i][del_len] == '=')
-			*is_contained = 1;
+			continue;
 		i++;
 	}
-	if (!(new = malloc(sizeof(char *) * i)))
+	if (!(new = malloc(sizeof(char *) * (i + 1))))
 		return (NULL);
-	migrate_except_deleted(&new, envp, del);
+	if (migrate_except_deleted(&new, envp, del) == ERROR)
+	{
+		free(new);
+		return (NULL);
+	}
 	return (new);
 }
 
@@ -72,21 +76,19 @@ void free_envv(char **envp) {
 	free(envp);
 }
 
-int	ft_unset(t_token *token)
+int	execute_unset(t_token *token)
 {
 	char	**new_envv;
-	int 	is_contained;
+	int 	i;
 
-	if (!token->argv[1])
-		return (ERROR);
-	if (!(new_envv = create_new_envv(token->envp, token->argv[1], &is_contained)))
-		return (ERROR);
-	if (is_contained == 0)
+	i = 1;
+	while (token->argv[i])
 	{
-		free_envv(new_envv);
-		return (SUCCESS);
+		if (!(new_envv = create_new_envv(token->envp, token->argv[i])))
+			return (ERROR);
+		free_envv(token->envp);
+		token->envp = new_envv;
+		i++;
 	}
-	free_envv(token->envp);
-	token->envp = new_envv;
 	return (SUCCESS);
 }

@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:48 by dongclee          #+#    #+#             */
-/*   Updated: 2024/07/24 16:13:49 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:54:59 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+char *key_to_value_loc(char *key, char **envv)
+{
+	size_t	key_len;
+	int i;
+
+	key_len = ft_strlen(key);
+	i = 0;
+	while (envv[i])
+	{
+		if (ft_strncmp(envv[i], key, key_len) == 0 && envv[i][key_len] == '=')
+			return (envv[i] + key_len + 1);
+		i++;
+	}
+	return NULL;
+}
 
 int	ft_env(char **envv)
 {
@@ -23,4 +39,12 @@ int	ft_env(char **envv)
 		i++;
 	}
 	return (SUCCESS);
+}
+
+int	execute_env(t_token *token)
+{
+	int	ret;
+
+	ret = ft_env(token->envp);
+	return (ret);
 }

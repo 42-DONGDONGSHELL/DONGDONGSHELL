@@ -12,11 +12,11 @@
 
 #include "../../include/minishell.h"
 
-int	ft_pwd(void)
+int	execute_pwd(void)
 {
 	char	*pwd;
 
-	if (!(pwd = malloc(sizeof(char) * 1000)))
+	if (!(pwd = malloc(sizeof(char) * 1000))) // todo : 사이즈에 대한 고민 필요.
 		return (ERROR);
 	if (!getcwd(pwd, sizeof(pwd)))
 	{

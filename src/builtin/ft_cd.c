@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:41 by dongclee          #+#    #+#             */
-/*   Updated: 2024/07/24 16:40:28 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:35:19 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,23 @@ int	ft_cd(char *path, char **envv)
 	free(buf);
 	free(pwd);
 	free(old_pwd);
+	return (SUCCESS);
+}
+
+int	execute_cd(t_token *token)
+{
+	char	*path;
+
+	if (token->argc == 1)
+		path = key_to_value_loc("HOME", token->envp);
+	else if (token->argv[1][0] =='\0')
+		return (SUCCESS);
+	else
+		path = token->argv[1];
+	if (ft_cd(path, token->envp) == ERROR)
+	{
+		// todo : Print error
+		return (ERROR);
+	}
 	return (SUCCESS);
 }

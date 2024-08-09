@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/25 18:19:27 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/08 15:34:50 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_node
 	void			*content;
 	struct s_node	*prev;
 	struct s_node	*next;
+	int				type; // ETC = 0, PIPE = 1, OUTPUT = 2, APPEND_OUTPUT = 3, INPUT = 4, HEREDOC = 5, REDIRECT = 6
 }	t_node;
 
 typedef struct s_linkedlist
@@ -27,14 +28,37 @@ typedef struct s_linkedlist
 	t_node			*head;
 	t_node			*tail;
 	int				size;
+	int				*pid;
+	int				token_cnt;
 }	t_linkedlist;
+
+typedef struct s_envp
+{
+	char			*key;
+	char			*value;
+}	t_envp;
 
 typedef struct s_token
 {
 	char			*cmd;
 	char			**argv;
-	char			**envp;
-	struct t_node	*file_list;
+	int				argc;
+	t_envp			*envp;
+	t_node			*file_head;
+	t_linkedlist	*file_list;
+	t_linkedlist	*list_info;
 }	t_token;
+
+typedef struct s_env_h
+{
+	char	*home;
+	t_envp	*envp_dict;
+}	t_env_h;
+
+typedef struct s_quote
+{
+	int				s_quote;
+	int				d_quote;
+}	t_quote;
 
 #endif
