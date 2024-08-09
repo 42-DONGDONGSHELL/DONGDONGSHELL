@@ -8,12 +8,23 @@ READLINE = -lreadline
 
 NAME = minishell
 
-PARSE = ./src/parse/parse.c ./src/parse/data_struct_.c ./src/parse/data_struct_free.c
+DATA_STRUCT =	./src/data_struct/data_struct_.c \
+				./src/data_struct/data_struct_utils.c \
 
+PARSE =	./src/parse/parse.c \
+		./src/parse/envp.c \
+		./src/parse/envsubst.c \
+		./src/parse/parse_operator.c \
+		./src/parse/quote.c \
+		./src/parse/token.c \
+		./src/parse/free_token.c \
+		./src/print_token.c \
 
-SRCS = 	./src/main.c \
+SRCS =	./src/main.c \
+		./src/utils.c \
 		$(PARSE) \
 		$(DATA) \
+		$(DATA_STRUCT) \
 
 OBJS = ${SRCS:.c=.o}
 

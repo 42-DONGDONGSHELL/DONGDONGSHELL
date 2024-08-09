@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/24 20:15:09 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/07 21:30:50 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,31 @@
 # include <readline/history.h>	// add_history
 
 # include "data.h"
+# include "data_struct.h"
 # include "parse.h"
+
+extern int	g_exit_code;
 
 # define FALSE 0
 # define TRUE 1
 # define ERROR 1
 # define SUCCESS 0
+
+enum	e_token
+{
+	ETC = 0,
+	PIPE = 1,
+	OUTPUT = 2,
+	APPEND_OUTPUT = 3,
+	INPUT = 4,
+	HEREDOC = 5,
+	REDIRECT = 6,
+};
+
+void	safe_free(void **ptr);
+void	*safe_malloc(size_t size);
+int		is_whitespace(char c);
+int		is_str_whitespace(char *str);
+void 			free_token_list(t_linkedlist *token_list);
 
 #endif

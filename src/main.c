@@ -6,23 +6,43 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/24 20:15:37 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 17:29:41 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	main(int argc, char *argv[], char **envp)
+int	g_exit_code = 0;
+
+char	*set_home(char **envp)
 {
-	char	*line;
+	t_envp	*envp_dict;
+	char	*home;
+
+	envp_dict = create_envp_dict(envp);
+	home = ft_strdup(find_envp_value(envp_dict, "HOME"));
+	free_envp_dict(envp_dict);
+	return (home);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_linkedlist	*token_list;
+	char			*line;
+	char			*home;
 
 	(void) argc;
 	(void) argv;
-	(void) envp;
+	home = set_home(envp);
 	while (1)
 	{
+		token_list = NULL;
 		line = readline("minishell$ ");
-		parse(line);
-		free(line);
+		token_list = parse(line, token_list, envp, home);
+		if (token_list == NULL)
+			continue;
+		safe_free((void **) &line);
+		free_token_list(token_list);
 	}
+	safe_free((void **) &home);
 }
