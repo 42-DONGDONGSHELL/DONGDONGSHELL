@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/07 21:58:26 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 17:08:52 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_token
 	char			*cmd;
 	char			**argv;
 	int				argc;
-	t_envp			*envp;
+	char			**envp;
 	t_node			*file_head;
 	t_linkedlist	*file_list;
 	t_linkedlist	*list_info;

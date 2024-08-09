@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 17:51:09 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/07 21:36:49 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 17:16:34 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	print_token(t_linkedlist *token_list)
 			i++;
 		}
 		printf("argc: %d\n", token->argc);
-		printf("envp: %s\n", token->envp[0].key);
+		printf("envp: %s\n", token->envp[0]);
 		file_now = token->file_head;
 		while (file_now)
 		{

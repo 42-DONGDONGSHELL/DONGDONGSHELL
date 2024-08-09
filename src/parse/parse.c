@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/07 22:18:02 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 17:28:03 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home
 	t_linkedlist	*envsubst_list;
 	t_node			*now;
 
+	if (!are_quotes_balanced(line))
+		return (NULL);
 	parsed_list = parse_operator(line);
 	trimmed_list = trim_list(parsed_list);
 	free_linkedlist(parsed_list);
@@ -114,7 +116,7 @@ t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home
 		now = now->next;
 	}
 	free_linkedlist(trimmed_list);
-	token_list = create_token_list(envsubst_list, envp_dict);
+	token_list = create_token_list(envsubst_list, envp);
 	print_token(token_list);
 	now = envsubst_list->head;
 	while (now)

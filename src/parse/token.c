@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/07 22:49:54 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/09 17:10:43 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	push_file(t_node **start, t_linkedlist *file_list)
 }
 
 
-void	create_token(t_node **start, t_node *now, t_linkedlist *token_list, t_envp *envp)
+void	create_token(t_node **start, t_node *now, t_linkedlist *token_list, char **envp)
 {
 	t_token			*token;
 	t_linkedlist	*file_list;
@@ -98,7 +98,7 @@ void	create_token(t_node **start, t_node *now, t_linkedlist *token_list, t_envp 
 	push(token_list, token);
 }
 
-t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, t_envp *envp)
+t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char **envp)
 {
 	t_node			*start;
 	t_node			*now;
