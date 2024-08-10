@@ -6,11 +6,12 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 16:37:59 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/08 16:33:24 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/09 20:26:16 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
+#include "../../include/ft_signal.h"
 
 /**
  * 자식 프로세스가 실행하는 함수
@@ -42,26 +43,38 @@ void	make_child(t_token *token, int fd[2], int fd_in, char *heredoc)
 	if (token->list_info->pid[i] < 0)
 		// todo : error
 	if (token->list_info->pid[i] == 0)
+	{
+		ft_signal_default();
 		child(token, fd, fd_in, heredoc);
+	}
+	ft_signal_ignore();
 	i++;
 }
 
-void	wait_child(t_linkedlist *list)
+int	wait_child(t_linkedlist *list)
 {
 	int	i;
 	int	status;
+	int	exit_code;
 
 	i = 0;
-	g_exit = 0;
+	exit_code = 0;
 	while (i < list->token_cnt)
 	{
 		waitpid(list->pid[i], &status, 0);
 		i++;
 	}
 	if (WIFEXITED(status))
-		g_exit = WEXITSTATUS(status);
+		exit_code = WEXITSTATUS(status);
+	ft_signal_prompt();
+	return (exit_code);
 }
 
+/**
+ * 파이프가 있을 때 사용.
+ * @param list
+ * @return
+ */
 int	execute(t_linkedlist *list)
 {
 	int	fd[2];
@@ -88,6 +101,36 @@ int	execute(t_linkedlist *list)
 			fd_in = open(last_heredoc, O_RDONLY);
 		}
 	}
-	wait_child(list);
-	return (SUCCESS);
+	return (wait_child(list));
+}
+
+/**
+ * 파이프가 없을 때 사용. ls | -> segmentfault 안니게
+ * @param list
+ */
+int	execute_single(t_token *token)
+{
+	int	pid;
+	int	status;
+	int	tp;
+	int	exit_code;
+	char *last_heredoc;
+
+	tp = is_builtin(token);
+	exit_code = 0;
+	if (tp == 2 || tp == 5 || tp == 7 || (tp == 4 && token->argv[1] == NULL))
+	{
+		exit_code = do_builtin(token, tp);
+		return (exit_code);
+	}
+	last_heredoc = read_heredoc(token);
+	pid = fork();
+	if (pid < 0)
+		// todo : error handling
+	if (pid == 0)
+		start_cmd(token, last_heredoc);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
+	return (exit_code);
 }

@@ -72,8 +72,8 @@ int	search_cmd(t_token *token)
 	if (bin_path == NULL)
 		return (ERROR); // todo : print Error cmd not found
 	execve(bin_path, token->argv, token->envp);
-	free(bin_path);
-	return (ERROR);
+	// todo : print Error cmd not found
+	exit(127);
 }
 
 /**

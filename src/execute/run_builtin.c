@@ -46,7 +46,7 @@ int	do_builtin(t_token *token, int builtin_idx)
 		ret = execute_unset(token);
 	else if (builtin_idx == 6)
 		ret = execute_env(token);
-	// else if (builtin_idx == 7)
-	// 	ret = execute_exit(token); // todo : execute_exit 함수 구현
+	 else if (builtin_idx == 7)
+	 	ret = execute_exit(token);
 	return (ret);
 }

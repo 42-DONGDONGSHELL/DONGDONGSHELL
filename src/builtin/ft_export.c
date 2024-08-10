@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/builtin.h"
 
 int is_valid_env(const char *str)
 {
@@ -75,17 +75,18 @@ int	execute_export(t_token *token)
 	int	i;
 	int	ret;
 
-	i = 1;
 	ret = 0;
+	if (token->argc == 1)
+		ret = execute_env(token);
+	i = 1;
 	while (token->argv[i])
 	{
 		ret = ft_export(token->argv[i], &token->envp);
 		if (ret == 1)
 		{
 			// todo : print ERROR;
-			return (ERROR);
-			break;
+			return (ret);
 		}
 	}
-	 return (SUCCESS);
+	 return (ret);
 }

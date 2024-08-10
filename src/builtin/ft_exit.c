@@ -35,6 +35,6 @@ int	execute_exit(t_token *token)
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		status = 255;
 	}
-	// todo : free 에 대한 고민
+	// todo : free에 대한 고민.
 	exit(status);
 }
