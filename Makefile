@@ -20,6 +20,8 @@ PARSE =	./src/parse/parse.c \
 		./src/parse/free_token.c \
 		./src/parse/strip_quotes.c \
 		./src/print_token.c \
+		./src/parse/trim.c \
+		./src/parse/parse_error.c \
 
 SRCS =	./src/main.c \
 		./src/utils.c \

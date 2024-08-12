@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:10:01 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 10:23:05 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 11:54:11 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	push_char_to_list(char *str, int *i, t_linkedlist *str_list)
 {
 	char	*c;
 
-	c = malloc(sizeof(char) * 2);
+	c = safe_malloc(sizeof(char) * 2);
 	*c = str[*i];
 	*(c + 1) = '\0';
 	push(str_list, c);
@@ -54,7 +54,7 @@ char	*strip_quotes(char *str)
 	node = str_list->head;
 	while (node)
 	{
-		free(node->content);
+		safe_free((void **)&node->content);
 		node = node->next;
 	}
 	free_linkedlist(str_list);
@@ -71,7 +71,7 @@ void	replace_quotes_in_token(t_token *token)
 	while (token->argv[i])
 	{
 		new_str = strip_quotes(token->argv[i]);
-		free(token->argv[i]);
+		safe_free((void **)&token->argv[i]);
 		token->argv[i] = new_str;
 		i++;
 	}
@@ -82,7 +82,7 @@ void	replace_quotes_in_token(t_token *token)
 		if (now_file->type != HEREDOC)
 		{
 			new_str = strip_quotes(now_file->content);
-			free(now_file->content);
+			safe_free((void **)&now_file->content);
 			now_file->content = new_str;
 		}
 		now_file = now_file->next;

@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 10:49:54 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 11:10:50 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		token_list = NULL;
 		line = readline("minishell$ ");
-		if(!line)
+		if (!line)
 			break ;
 		token_list = parse(line, token_list, envp_copy, home);
 		safe_free((void **) &line);
