@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 11:57:58 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 17:28:01 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,24 @@ t_linkedlist	*substitute_env(t_linkedlist *trimmed_list, t_env_h *env_h)
 	return (envsubst_list);
 }
 
-t_linkedlist	*parse(char *line, t_linkedlist *tk_list, char **envp, char *h)
+int	parse(char *line, t_linkedlist **tk_list, char **envp, char *h)
 {
 	t_linkedlist	*trimmed_list;
 	t_env_h			env_h;
 	t_linkedlist	*envsubst_list;
 	t_node			*now;
+	int				operator_check;
 
 	if (!are_quotes_balanced(line))
-		return (NULL);
+		return (QUOTES);
 	trimmed_list = parse_and_trim(line);
-	if (consecutive_operator_check(trimmed_list))
-		return (NULL);
+	operator_check = consecutive_operator_check(trimmed_list);
+	if (operator_check)
+		return (operator_check);
 	env_h = initialize_env(envp, h);
 	envsubst_list = substitute_env(trimmed_list, &env_h);
-	tk_list = create_token_list(envsubst_list, envp);
-	replace_quotes(tk_list);
+	*tk_list = create_token_list(envsubst_list, envp);
+	replace_quotes(*tk_list);
 	now = envsubst_list->head;
 	while (now)
 	{
@@ -85,5 +87,5 @@ t_linkedlist	*parse(char *line, t_linkedlist *tk_list, char **envp, char *h)
 	}
 	free_envp_dict(env_h.envp_dict);
 	free_linkedlist(envsubst_list);
-	return (tk_list);
+	return (ETC);
 }

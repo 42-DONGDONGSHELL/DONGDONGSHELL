@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:53:44 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 12:10:52 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 17:27:13 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ void			free_token_list(t_linkedlist *token_list);
 // parse_error.c
 int				are_quotes_balanced(const char *str);
 int				consecutive_operator_check(t_linkedlist *trimmed_list);
+void			print_parse_error(int error_code);
 
 // parse_operator.c
 int				is_operator(char c);
 t_linkedlist	*parse_operator(char *line);
 
 // parse.c
-t_linkedlist	*parse(char *line, t_linkedlist *tk_list, char **envp, char *h);
+int				parse(char *line, t_linkedlist **tk_list, char **envp, char *h);
 
 // quote.c
 int				is_in_quotes(const char *str, const char *target_addr);

@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 12:00:42 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 17:12:17 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ enum	e_token
 	APPEND_OUTPUT = 3,
 	INPUT = 4,
 	HEREDOC = 5,
-	REDIRECT = 6,
+	NLINE = 6,
+	QUOTES = 7,
 };
 
 // utils.c
