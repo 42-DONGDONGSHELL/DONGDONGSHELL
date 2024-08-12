@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 19:37:55 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:49:54 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	t_linkedlist	*token_list;
 	char			*line;
 	char			*home;
-	char 			**envp_copy;
+	char			**envp_copy;
 
 	(void) argc;
 	(void) argv;
@@ -40,10 +40,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		token_list = NULL;
 		line = readline("minishell$ ");
+		if(!line)
+			break ;
 		token_list = parse(line, token_list, envp_copy, home);
-		if (token_list == NULL)
-			continue;
 		safe_free((void **) &line);
+		if (token_list == NULL)
+			continue ;
+		print_token(token_list);
 		free_token_list(token_list);
 	}
 	free_envp(envp_copy);

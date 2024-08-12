@@ -6,78 +6,97 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:10:01 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 21:04:37 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:23:05 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
+void	push_char_to_list(char *str, int *i, t_linkedlist *str_list)
+{
+	char	*c;
+
+	c = malloc(sizeof(char) * 2);
+	*c = str[*i];
+	*(c + 1) = '\0';
+	push(str_list, c);
+}
+
+void	process_quotes(char *str, int *i, t_linkedlist *str_list, char quote)
+{
+	(*i)++;
+	while (str[*i] && str[*i] != quote)
+	{
+		push_char_to_list(str, i, str_list);
+		(*i)++;
+	}
+}
+
 char	*strip_quotes(char *str)
 {
 	t_linkedlist	*str_list;
-	t_linkedlist	*quote_list;
-	char			*quote_str;
+	t_node			*node;
 	char			*new_str;
-	int 			i;
-	char 			*c;
-
+	int				i;
 
 	i = 0;
 	str_list = create_linkedlist();
 	while (str[i])
 	{
-		printf("%d\n", is_in_quotes(str, &str[i]));
-		printf("i: %d\n", i);
-		if (str[i] == '\'' && is_in_quotes(str, &str[i]) == 1)
-		{
-			quote_list = create_linkedlist();
-			i++;
-			while (str[i] && str[i] != '\'')
-				push(quote_list, &str[i++]);
-			quote_str = linkedlist_to_str(quote_list);
-			while (*quote_str)
-				push(str_list, quote_str++);
-			free_linkedlist(quote_list);
-		}
-		else if (str[i] == '\"' && is_in_quotes(str, &str[i]) == 2)
-		{
-			quote_list = create_linkedlist();
-			i++;
-			while (str[i] && str[i] != '\"')
-				push(quote_list, &str[i++]);
-			quote_str = linkedlist_to_str(quote_list);
-			while (*quote_str)
-				push(str_list, quote_str++);
-			free_linkedlist(quote_list);
-		}
+		if ((str[i] == '\'' && is_in_quotes(str, &str[i]) == 1) \
+			|| (str[i] == '\"' && is_in_quotes(str, &str[i]) == 2))
+			process_quotes(str, &i, str_list, str[i]);
 		else
-		{
-			c = malloc(sizeof(char *) * 2);
-			*c = str[i];
-			*(c + 1) = '\0';
-			push(str_list, c);
-		}
+			push_char_to_list(str, &i, str_list);
 		i++;
 	}
 	new_str = linkedlist_to_str(str_list);
-	t_node *node = str_list->head;
-
+	node = str_list->head;
+	while (node)
+	{
+		free(node->content);
+		node = node->next;
+	}
 	free_linkedlist(str_list);
 	return (new_str);
 }
 
-void check_leak()
+void	replace_quotes_in_token(t_token *token)
 {
-	system("leaks a.out");
+	int		i;
+	char	*new_str;
+	t_node	*now_file;
+
+	i = 0;
+	while (token->argv[i])
+	{
+		new_str = strip_quotes(token->argv[i]);
+		free(token->argv[i]);
+		token->argv[i] = new_str;
+		i++;
+	}
+	token->cmd = token->argv[0];
+	now_file = token->file_head;
+	while (now_file)
+	{
+		if (now_file->type != HEREDOC)
+		{
+			new_str = strip_quotes(now_file->content);
+			free(now_file->content);
+			now_file->content = new_str;
+		}
+		now_file = now_file->next;
+	}
 }
 
-int main()
+void	replace_quotes(t_linkedlist *token_list)
 {
-	atexit(check_leak);
-	char *str = "hello \"wor\'ld\" \'gd\' world";
-	char *new_str = strip_quotes(str);
-	printf("%s\n", new_str);
-	free(new_str);
+	t_node	*now;
 
-	return (0);
+	now = token_list->head;
+	while (now)
+	{
+		replace_quotes_in_token(now->content);
+		now = now->next;
+	}
 }

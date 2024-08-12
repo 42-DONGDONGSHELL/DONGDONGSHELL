@@ -6,16 +6,16 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 20:21:23 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/07 22:39:54 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:21:22 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-void free_token(t_token *token)
+void	free_token(t_token *token)
 {
-	int i;
-	t_node *now;
+	int		i;
+	t_node	*now;
 
 	i = 0;
 	while (token->argv[i])
@@ -25,7 +25,7 @@ void free_token(t_token *token)
 	}
 	safe_free((void **)&token->argv);
 	now = token->file_head;
-	while(now)
+	while (now)
 	{
 		safe_free((void **)&now->content);
 		now = now->next;
@@ -33,12 +33,11 @@ void free_token(t_token *token)
 	free_linkedlist(token->file_list);
 }
 
-void free_token_list(t_linkedlist *token_list)
+void	free_token_list(t_linkedlist *token_list)
 {
-	t_node *now;
+	t_node	*now;
 
 	now = token_list->head;
-
 	while (now)
 	{
 		free_token((t_token *)now->content);
@@ -47,4 +46,3 @@ void free_token_list(t_linkedlist *token_list)
 	}
 	free_linkedlist(token_list);
 }
-

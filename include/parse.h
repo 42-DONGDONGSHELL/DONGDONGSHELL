@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:53:44 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 17:27:29 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:31:32 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ int				is_operator(char c);
 t_linkedlist	*parse_operator(char *line);
 
 // parse.c
-t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home);
+t_linkedlist	*parse(char *line, t_linkedlist *tk_list, char **envp, char *h);
 
 // token.c
 t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char **envp);
 
 int				are_quotes_balanced(const char *str);
 
-void 			print_token(t_linkedlist *token_list);
+// strip_quotes.c
+char			*strip_quotes(char *str);
+void			replace_quotes(t_linkedlist *token_list);
+
+void			print_token(t_linkedlist *token_list);
 
 #endif

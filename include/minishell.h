@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 19:37:29 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:25:31 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ char	*ft_safe_strdup(const char *s1);
 char	*ft_safe_substr(char const *s, unsigned int start, size_t len);
 char	**ft_envpdup(char **envp);
 void	free_envp(char **envp_copy);
+int		array_size(char **arr);
 
 #endif

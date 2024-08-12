@@ -18,6 +18,7 @@ PARSE =	./src/parse/parse.c \
 		./src/parse/quote.c \
 		./src/parse/token.c \
 		./src/parse/free_token.c \
+		./src/parse/strip_quotes.c \
 		./src/print_token.c \
 
 SRCS =	./src/main.c \

@@ -6,21 +6,11 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 19:23:01 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:26:40 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
-
-int	array_size(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-		i++;
-	return (i);
-}
 
 char	**list_to_arr(t_linkedlist *linkedlist)
 {
@@ -69,8 +59,7 @@ void	push_file(t_node **start, t_linkedlist *file_list)
 	*start = (*start)->next;
 }
 
-
-void	create_token(t_node **start, t_node *now, t_linkedlist *token_list, char **envp)
+void	mk_token(t_node **start, t_node *now, t_linkedlist *list, char **envp)
 {
 	t_token			*token;
 	t_linkedlist	*file_list;
@@ -92,10 +81,10 @@ void	create_token(t_node **start, t_node *now, t_linkedlist *token_list, char **
 	token->cmd = token->argv[0];
 	token->file_head = file_list->head;
 	token->file_list = file_list;
-	token->list_info = token_list;
+	token->list_info = list;
 	token->envp = envp;
 	free_linkedlist(argv_list);
-	push(token_list, token);
+	push(list, token);
 }
 
 t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char **envp)
@@ -111,11 +100,11 @@ t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char **envp)
 	{
 		if (now->type == PIPE)
 		{
-			create_token(&start, now, token_list, envp);
+			mk_token(&start, now, token_list, envp);
 			start = now->next;
 		}
 		now = now->next;
 	}
-	create_token(&start, now, token_list, envp);
+	mk_token(&start, now, token_list, envp);
 	return (token_list);
 }

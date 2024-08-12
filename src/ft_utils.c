@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:17:11 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 19:37:35 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:20:17 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*ft_safe_strdup(const char *s1)
 		exit(EXIT_FAILURE);
 	return (str);
 }
+
 char	*ft_safe_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*str;

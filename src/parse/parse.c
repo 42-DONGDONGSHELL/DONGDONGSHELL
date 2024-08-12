@@ -6,21 +6,21 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 19:22:28 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:48:02 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-char	*trim_whitespace(const char* str)
+char	*trim_whitespace(const char	*str)
 {
-	const char* start;
-	const char* end;
-	char* trimmed_str;
-	size_t new_length;
+	const char	*start;
+	const char	*end;
+	char		*trimmed_str;
+	size_t		new_length;
 
 	if (str == NULL)
-		return NULL;
+		return (NULL);
 	start = str;
 	end = str + ft_strlen(str) - 1;
 	while (is_whitespace(*start))
@@ -83,8 +83,7 @@ int	consecutive_operator_check(t_linkedlist *trimmed_list)
 	return (return_flag);
 }
 
-
-t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home)
+t_linkedlist	*parse(char *line, t_linkedlist *tk_list, char **envp, char *h)
 {
 	t_envp			*envp_dict;
 	t_env_h			env_h;
@@ -105,7 +104,7 @@ t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home
 	}
 	envp_dict = create_envp_dict(envp);
 	env_h.envp_dict = envp_dict;
-	env_h.home = home;
+	env_h.home = h;
 	envsubst_list = create_linkedlist();
 	now = trimmed_list->head;
 	while (now)
@@ -126,8 +125,8 @@ t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home
 		}
 	}
 	free_linkedlist(trimmed_list);
-	token_list = create_token_list(envsubst_list, envp);
-	print_token(token_list);
+	tk_list = create_token_list(envsubst_list, envp);
+	replace_quotes(tk_list);
 	now = envsubst_list->head;
 	while (now)
 	{
@@ -136,5 +135,5 @@ t_linkedlist	*parse(char *line, t_linkedlist *token_list,char **envp, char *home
 	}
 	free_envp_dict(envp_dict);
 	free_linkedlist(envsubst_list);
-	return (token_list);
+	return (tk_list);
 }

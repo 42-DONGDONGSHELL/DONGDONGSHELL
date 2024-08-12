@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 01:44:33 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 19:22:48 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:23:22 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,3 @@ t_linkedlist	*parse_operator(char *line)
 	push_command(parsed_list, line, start, i);
 	return (parsed_list);
 }
-
