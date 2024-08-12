@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 16:16:03 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 12:02:06 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 12:16:30 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**split_envp(char *str)
 	int		key_len;
 	int		value_len;
 
-	s2 = malloc(2 * sizeof(char *));
+	s2 = safe_malloc(2 * sizeof(char *));
 	delimiter = ft_strchr(str, '=');
 	if (delimiter == NULL)
 	{

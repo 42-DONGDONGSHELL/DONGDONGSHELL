@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:17:11 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 10:20:17 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 12:15:02 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**ft_envpdup(char **envp)
 	env_count = 0;
 	while (envp[env_count] != NULL)
 		env_count++;
-	envp_copy = (char **)malloc((env_count + 1) * sizeof(char *));
+	envp_copy = (char **)safe_malloc((env_count + 1) * sizeof(char *));
 	if (envp_copy == NULL)
 		return (NULL);
 	i = 0;
