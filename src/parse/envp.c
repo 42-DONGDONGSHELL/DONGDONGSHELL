@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 16:16:03 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 19:22:02 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 12:02:06 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ char	**split_envp(char *str)
 	return (s2);
 }
 
-//환경변수 [{key,value}, ...] 생성
 t_envp	*create_envp_dict(char **envp)
 {
 	t_envp	*envp_dict;
