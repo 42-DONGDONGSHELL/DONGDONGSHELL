@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 17:08:52 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 11:59:11 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ typedef struct s_token
 
 typedef struct s_env_h
 {
-	char	*home;
-	t_envp	*envp_dict;
+	char			*home;
+	t_envp			*envp_dict;
 }	t_env_h;
 
 typedef struct s_quote

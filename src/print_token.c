@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 17:51:09 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/09 17:16:34 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 09:47:09 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	print_token(t_linkedlist *token_list)
 	now = token_list->head;
 	while (now)
 	{
+		printf("--------token--------\n");
 		token = (t_token *)now->content;
 		printf("cmd: %s\n", token->cmd);
 		i = 0;
@@ -39,5 +40,6 @@ void	print_token(t_linkedlist *token_list)
 			file_now = file_now->next;
 		}
 		now = now->next;
+		printf("---------------------\n");
 	}
 }

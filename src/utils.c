@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 04:15:37 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/01 22:24:22 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 10:25:08 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,14 @@ int	is_str_whitespace(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int	array_size(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
 }

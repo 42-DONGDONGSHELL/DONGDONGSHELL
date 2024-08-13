@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/07 21:30:50 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 17:12:17 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,21 @@ enum	e_token
 	APPEND_OUTPUT = 3,
 	INPUT = 4,
 	HEREDOC = 5,
-	REDIRECT = 6,
+	NLINE = 6,
+	QUOTES = 7,
 };
 
+// utils.c
 void	safe_free(void **ptr);
 void	*safe_malloc(size_t size);
 int		is_whitespace(char c);
 int		is_str_whitespace(char *str);
-void 			free_token_list(t_linkedlist *token_list);
+int		array_size(char **arr);
+
+// ft_utils.c
+char	*ft_safe_strdup(const char *s1);
+char	*ft_safe_substr(char const *s, unsigned int start, size_t len);
+char	**ft_envpdup(char **envp);
+void	free_envp(char **envp_copy);
 
 #endif

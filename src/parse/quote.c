@@ -6,30 +6,11 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:05:42 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 12:25:31 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 11:18:56 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
-
-int	are_quotes_balanced(const char *str)
-{
-	t_quote	quote;
-
-	quote.s_quote = 0;
-	quote.d_quote = 0;
-	while (*str != '\0')
-	{
-		if (*str == '\'' && !quote.d_quote)
-			quote.s_quote = !quote.s_quote;
-		else if (*str == '\"' && !quote.s_quote)
-			quote.d_quote = !quote.d_quote;
-		str++;
-	}
-	if (!quote.s_quote && !quote.d_quote)
-		return (1);
-	return (0);
-}
 
 int	check_char_pos(const char *str, const char *target_addr, t_quote *quote)
 {

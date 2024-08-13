@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 16:16:03 by drhee             #+#    #+#             */
-/*   Updated: 2024/07/31 11:52:25 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/12 12:16:30 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**split_envp(char *str)
 	int		key_len;
 	int		value_len;
 
-	s2 = malloc(2 * sizeof(char *));
+	s2 = safe_malloc(2 * sizeof(char *));
 	delimiter = ft_strchr(str, '=');
 	if (delimiter == NULL)
 	{
@@ -75,7 +75,6 @@ char	**split_envp(char *str)
 	return (s2);
 }
 
-//환경변수 [{key,value}, ...] 생성
 t_envp	*create_envp_dict(char **envp)
 {
 	t_envp	*envp_dict;
@@ -87,7 +86,7 @@ t_envp	*create_envp_dict(char **envp)
 		i++;
 	envp_dict = (t_envp *)safe_malloc(sizeof(t_envp) * (i + 2));
 	i = 0;
-	envp_dict[i].key = ft_strdup("?");
+	envp_dict[i].key = ft_safe_strdup("?");
 	envp_dict[i].value = ft_itoa(g_exit_code);
 	while (envp[i])
 	{
