@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 17:51:09 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 09:47:09 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/13 18:55:45 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_token(t_linkedlist *token_list)
 			i++;
 		}
 		printf("argc: %d\n", token->argc);
-		printf("envp: %s\n", token->envp[0]);
+		printf("envp: %s\n", token->envp[0][0]);
 		file_now = token->file_head;
 		while (file_now)
 		{

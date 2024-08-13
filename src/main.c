@@ -6,11 +6,12 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 17:24:16 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/13 18:58:11 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include "../include/ms_execute.h"
 
 int	g_exit_code = 0;
 
@@ -43,13 +44,20 @@ int	main(int argc, char **argv, char **envp)
 		line = readline("minishell$ ");
 		if (!line)
 			break ;
-		parse_result = parse(line, &token_list, envp_copy, home);
+		if (ft_strncmp(line, "", 1) == 0)
+			continue ;
+		parse_result = parse(line, &token_list, &envp_copy, home);
 		safe_free((void **) &line);
 		if (parse_result)
 		{
 			print_parse_error(parse_result);
 			continue ;
 		}
+		if (token_list->token_cnt == 1)
+		{
+			execute_single((t_token *) token_list->head->content);
+		}
+		envp_copy = *((t_token *) token_list->head->content)->envp;
 		print_token(token_list);
 		free_token_list(token_list);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 10:26:40 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/13 18:55:09 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void	push_file(t_node **start, t_linkedlist *file_list)
 	push(file_list, ft_safe_strdup((*start)->content));
 	file_list->tail->type = (*start)->type;
 	push(file_list, ft_safe_strdup((*start)->next->content));
-	file_list->tail->type = (*start)->type;
+	file_list->tail->type = (*start)->next->type;
 	*start = (*start)->next;
 }
 
-void	mk_token(t_node **start, t_node *now, t_linkedlist *list, char **envp)
+void	mk_token(t_node **start, t_node *now, t_linkedlist *list, char ***envp)
 {
 	t_token			*token;
 	t_linkedlist	*file_list;
@@ -87,7 +87,7 @@ void	mk_token(t_node **start, t_node *now, t_linkedlist *list, char **envp)
 	push(list, token);
 }
 
-t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char **envp)
+t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char ***envp)
 {
 	t_node			*start;
 	t_node			*now;
@@ -100,11 +100,13 @@ t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char **envp)
 	{
 		if (now->type == PIPE)
 		{
+			token_list->token_cnt++;
 			mk_token(&start, now, token_list, envp);
 			start = now->next;
 		}
 		now = now->next;
 	}
+	token_list->token_cnt++;
 	mk_token(&start, now, token_list, envp);
 	return (token_list);
 }

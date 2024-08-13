@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:53:44 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 17:27:13 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/13 18:54:18 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int				is_operator(char c);
 t_linkedlist	*parse_operator(char *line);
 
 // parse.c
-int				parse(char *line, t_linkedlist **tk_list, char **envp, char *h);
+int				parse(char *line, t_linkedlist **tk_list, char ***envp, char *h);
 
 // quote.c
 int				is_in_quotes(const char *str, const char *target_addr);
@@ -47,7 +47,7 @@ char			*strip_quotes(char *str);
 void			replace_quotes(t_linkedlist *token_list);
 
 // token.c
-t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char **envp);
+t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char ***envp);
 
 // trim.c
 char			*trim_whitespace(const char *str);

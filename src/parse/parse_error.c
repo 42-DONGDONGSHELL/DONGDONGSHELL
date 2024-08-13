@@ -36,7 +36,7 @@ int	set_return_flag(t_node *now)
 	if (now->type == PIPE)
 		return (PIPE);
 	else if (now->next == NULL)
-		return (NEWLINE);
+		return (NLINE);
 	else
 		return (now->next->type);
 }
@@ -76,7 +76,7 @@ void	print_parse_error(int error_code)
 		printf("minishell: syntax error: unexpected end of file\n");
 	else if (error_code == PIPE)
 		printf("minishell: syntax error: unexpected token `|'\n");
-	else if (error_code == NEWLINE)
+	else if (error_code == NLINE)
 		printf("minishell: syntax error: unexpected newline\n");
 	else if (error_code == OUTPUT)
 		printf("minishell: syntax error: unexpected token `>'\n");

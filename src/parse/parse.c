@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
 /*   Updated: 2024/08/12 17:28:01 by drhee            ###   ########.fr       */
@@ -61,7 +61,7 @@ t_linkedlist	*substitute_env(t_linkedlist *trimmed_list, t_env_h *env_h)
 	return (envsubst_list);
 }
 
-int	parse(char *line, t_linkedlist **tk_list, char **envp, char *h)
+int	parse(char *line, t_linkedlist **tk_list, char ***envp, char *h)
 {
 	t_linkedlist	*trimmed_list;
 	t_env_h			env_h;
@@ -75,7 +75,7 @@ int	parse(char *line, t_linkedlist **tk_list, char **envp, char *h)
 	operator_check = consecutive_operator_check(trimmed_list);
 	if (operator_check)
 		return (operator_check);
-	env_h = initialize_env(envp, h);
+	env_h = initialize_env(*envp, h);
 	envsubst_list = substitute_env(trimmed_list, &env_h);
 	*tk_list = create_token_list(envsubst_list, envp);
 	replace_quotes(*tk_list);

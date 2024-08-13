@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 17:12:17 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/08 15:33:54 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # include <readline/history.h>	// add_history
 
 # include "data.h"
-# include "data_struct.h"
 # include "parse.h"
 
 extern int	g_exit_code;
@@ -50,21 +49,13 @@ enum	e_token
 	APPEND_OUTPUT = 3,
 	INPUT = 4,
 	HEREDOC = 5,
-	NLINE = 6,
-	QUOTES = 7,
+	REDIRECT = 6,
 };
 
-// utils.c
 void	safe_free(void **ptr);
 void	*safe_malloc(size_t size);
 int		is_whitespace(char c);
 int		is_str_whitespace(char *str);
-int		array_size(char **arr);
-
-// ft_utils.c
-char	*ft_safe_strdup(const char *s1);
-char	*ft_safe_substr(char const *s, unsigned int start, size_t len);
-char	**ft_envpdup(char **envp);
-void	free_envp(char **envp_copy);
+void 			free_token_list(t_linkedlist *token_list);
 
 #endif

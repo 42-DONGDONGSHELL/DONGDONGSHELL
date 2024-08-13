@@ -18,17 +18,38 @@ PARSE =	./src/parse/parse.c \
 		./src/parse/quote.c \
 		./src/parse/token.c \
 		./src/parse/free_token.c \
-		./src/parse/strip_quotes.c \
 		./src/print_token.c \
-		./src/parse/trim.c \
-		./src/parse/parse_error.c \
+
+BUILTIN = ./src/builtin/ft_cd.c \
+		./src/builtin/ft_echo.c \
+		./src/builtin/ft_env.c \
+		./src/builtin/ft_exit.c \
+		./src/builtin/ft_export.c \
+		./src/builtin/ft_pwd.c \
+		./src/builtin/ft_unset.c \
+
+EXECUTE = ./src/execute/execute.c \
+		./src/execute/heredoc.c \
+		./src/execute/redirect.c \
+		./src/execute/run_builtin.c \
+		./src/execute/run_cmd.c \
+
+SIGNAL = ./src/signal/set_signal.c \
+		./src/signal/signal_handler.c \
+		./src/signal/signal_util.c \
+
+ERR = ./src/error/error.c \
+		./src/error/error_detail.c \
 
 SRCS =	./src/main.c \
 		./src/utils.c \
-		./src/ft_utils.c \
 		$(PARSE) \
 		$(DATA) \
 		$(DATA_STRUCT) \
+		$(BUILTIN) \
+		$(EXECUTE) \
+		$(SIGNAL) \
+		$(ERR) \
 
 OBJS = ${SRCS:.c=.o}
 
