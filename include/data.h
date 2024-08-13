@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 18:44:26 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:30:02 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_token
 	char			*cmd;
 	char			**argv;
 	int				argc;
-	char			**envp;
+	char			***envp;
 	t_node			*file_head;
 	t_linkedlist	*file_list;
 	t_linkedlist	*list_info;

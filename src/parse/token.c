@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 18:55:09 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:40:04 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,13 @@ t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char ***envp)
 	{
 		if (now->type == PIPE)
 		{
-			token_list->token_cnt++;
 			mk_token(&start, now, token_list, envp);
 			start = now->next;
+			token_list->token_cnt++;
 		}
 		now = now->next;
 	}
-	token_list->token_cnt++;
 	mk_token(&start, now, token_list, envp);
+	token_list->token_cnt++;
 	return (token_list);
 }

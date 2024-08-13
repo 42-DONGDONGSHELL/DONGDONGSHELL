@@ -25,7 +25,10 @@ int	execute_exit(t_token *token)
     if (!token->argv[1])
 		status = 0;
 	else if (is_all_digit(token->argv[1]))
+	{
 		status = ft_atoi(token->argv[1]);
+		status %= 256;
+	}
 	else
 		status = perror_numeric("exit", token->argv[1]);
 	// todo : free에 대한 고민.

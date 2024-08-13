@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 18:09:29 by dongclee          #+#    #+#             */
-/*   Updated: 2024/07/24 18:09:31 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:54:06 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../../include/ms_error.h"
 
 int	execute_pwd(void)
 {
 	char	*pwd;
 
-	if (!(pwd = malloc(sizeof(char) * 1000))) // todo : 사이즈에 대한 고민 필요.
-		return (ERROR);
-	if (!getcwd(pwd, sizeof(pwd)))
+	pwd = safe_malloc(sizeof(char) * 1000);
+	if (!getcwd(pwd, 1000))
 	{
 		free(pwd);
-		return (ERROR);
+		return (perror_cmd("pwd"));
 	}
 	ft_putendl_fd(pwd, 1);
 	free(pwd);

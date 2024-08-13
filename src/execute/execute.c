@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 16:37:59 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/13 16:03:15 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/13 21:58:03 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	execute_single(t_token *token)
 
 	tp = is_builtin(token);
 	exit_code = 0;
-	if (tp == 2 || tp == 5 || tp == 7 || (tp == 4 && token->argv[1] == NULL))
+	if (tp == 2 || tp == 5 || tp == 7 || (tp == 4 && token->argv[1] != NULL))
 	{
 		exit_code = do_builtin(token, tp);
 		return (exit_code);

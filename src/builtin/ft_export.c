@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:55 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/13 18:59:16 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:27:12 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_export(char *str, char ***envv)
 		}
 	new_envv = (char **)safe_malloc(sizeof(char *) * (i + 2));
 	i = 0;
-	while (envv[0][i])
+	while ((*envv)[i])
 	{
 		new_envv[i] = ft_strdup(envv[0][i]);
 		i++;
@@ -69,7 +69,7 @@ int	ft_export(char *str, char ***envv)
 	new_envv[i++] = ft_strdup(str);
 	new_envv[i] = NULL;
 	free_envp(*envv);
-	envv = &new_envv;
+	*envv = new_envv;
 	return (SUCCESS);
 }
 

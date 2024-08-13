@@ -15,9 +15,12 @@ PARSE =	./src/parse/parse.c \
 		./src/parse/envp.c \
 		./src/parse/envsubst.c \
 		./src/parse/parse_operator.c \
+		./src/parse/parse_error.c \
 		./src/parse/quote.c \
 		./src/parse/token.c \
 		./src/parse/free_token.c \
+		./src/parse/strip_quotes.c \
+		./src/parse/trim.c \
 		./src/print_token.c \
 
 BUILTIN = ./src/builtin/ft_cd.c \
@@ -43,6 +46,7 @@ ERR = ./src/error/error.c \
 
 SRCS =	./src/main.c \
 		./src/utils.c \
+		./src/ft_utils.c \
 		$(PARSE) \
 		$(DATA) \
 		$(DATA_STRUCT) \

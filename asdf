@@ -1,4 +1,0 @@
-ret = 1
-do_builtin
-execute_echo
-

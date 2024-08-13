@@ -68,16 +68,13 @@ char *find_executable_path(char *cmd, char **envp)
 int	search_cmd(t_token *token)
 {
 	char	*bin_path;
-
-	printf("CMD = %s\n", token->cmd);
 	bin_path = find_executable_path(token->cmd, *(token->envp));
-	printf("bin_path = %s\n", bin_path);
 	if (bin_path == NULL)
 		exit(perror_cmd_not_found(token->cmd));
 	execve(bin_path, token->argv, *(token->envp));
 	exit(perror_cmd_not_found(token->cmd));
 }
-//cat execve("/bin/cat", ['/bin/cat', a.txt], token->envp);
+
 /**
  * 빌트인 함수인지 확인 후 아니라면 실행 경로에 있는 함수인지 확인
  */

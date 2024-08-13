@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:58 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/13 18:55:59 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:44:13 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_valid_key(char *key)
 	return (1);
 }
 
-int	migrate_except_deleted(char ***rtn, char **envp, char *del)
+void	migrate_except_deleted(char ***rtn, char **envp, char *del)
 {
 	int	i;
 	int	j;
@@ -41,19 +41,11 @@ int	migrate_except_deleted(char ***rtn, char **envp, char *del)
 			i++;
 			continue;
 		}
-		(*rtn)[j] = strdup(envp[i]);
-		if ((*rtn)[j] == NULL) {
-			while (--j >= 0)
-				free((*rtn)[j]);
-			free(*rtn);
-			*rtn = NULL;
-			return (ERROR);
-		}
+		(*rtn)[j] = ft_safe_strdup(envp[i]);
 		i++;
 		j++;
 	}
 	(*rtn)[j] = NULL;
-	return (SUCCESS);
 }
 
 char	**create_new_envv(char **envp, char *del)
@@ -61,22 +53,21 @@ char	**create_new_envv(char **envp, char *del)
 	char	**new;
 	size_t	i;
 	int	del_len;
+	int	need_delete;
 
 	del_len = ft_strlen(del);
 	i = 0;
+	need_delete = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], del, del_len) == 0 && envp[i][del_len] == '=')
-			continue;
+			need_delete = 1;
 		i++;
 	}
-	if (!(new = malloc(sizeof(char *) * (i + 1))))
-		return (NULL);
-	if (migrate_except_deleted(&new, envp, del) == ERROR)
-	{
-		free(new);
-		return (NULL);
-	}
+	if (!need_delete)
+		return (envp);
+	new = (char **)safe_malloc(sizeof(char *) * (i + 1));
+	migrate_except_deleted(&new, envp, del);
 	return (new);
 }
 
@@ -109,9 +100,7 @@ int	execute_unset(t_token *token)
 			status = perror_identifier("unset", token->argv[i++]);
 			continue ;
 		}
-		if (!(new_envv = create_new_envv(*(token->envp), token->argv[i])))
-			return (perror_etc());
-		free_envv(token->envp);
+		new_envv = create_new_envv(*(token->envp), token->argv[i]);
 		*(token->envp) = new_envv;
 		i++;
 	}
