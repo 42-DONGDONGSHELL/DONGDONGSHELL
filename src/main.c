@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **envp)
 	char			*home;
 	char			**envp_copy;
 	int				parse_result;
+	int				exit_code;
 
 	(void) argc;
 	(void) argv;
@@ -57,12 +58,13 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		if (token_list->token_cnt == 1)
-			execute_single((t_token *) token_list->head->content);
+			exit_code = execute_single((t_token *) token_list->head->content);
 		else
 		{
 			printf("main :: before execute\n");
-			execute(token_list);
+			exit_code = execute(token_list);
 		}
+		printf("MAIN :: exit_code = %d\n", exit_code);
 		envp_copy = *((t_token *) token_list->head->content)->envp;
 		print_token(token_list);
 		free_token_list(token_list);
