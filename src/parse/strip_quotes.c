@@ -72,19 +72,20 @@ void	replace_quotes_in_token(t_token *token)
 	{
 		new_str = strip_quotes(token->argv[i]);
 		safe_free((void **)&token->argv[i]);
-		token->argv[i] = new_str;
-		i++;
+		token->argv[i++] = new_str;
 	}
 	token->cmd = token->argv[0];
 	now_file = token->file_head;
 	while (now_file)
 	{
-		if (now_file->type != HEREDOC)
+		if (now_file->type == HEREDOC)
 		{
-			new_str = strip_quotes(now_file->content);
-			safe_free((void **)&now_file->content);
-			now_file->content = new_str;
+			now_file = now_file->next->next;
+			continue;
 		}
+		new_str = strip_quotes(now_file->content);
+		safe_free((void **)&now_file->content);
+		now_file->content = new_str;
 		now_file = now_file->next;
 	}
 }

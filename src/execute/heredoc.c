@@ -27,11 +27,19 @@ char	*create_heredoc_filepath(t_token *token)
  */
 char	*delete_quotes_and_check(char *eof, int *need_convert)
 {
-	if ((eof[0] == '\'' && eof[ft_strlen(eof) - 1] == '\'')
-		|| (eof[0] == '\"' && eof[ft_strlen(eof) - 1] == '\"'))
-		*need_convert = 0;
-	else
-		*need_convert = 1;
+	int	i;
+
+	i = 0;
+	*need_convert = 1;
+	while (eof[i])
+	{
+		if (eof[i] == '\'' || eof[i] == '\"')
+		{
+			*need_convert = 0;
+			break ;
+		}
+		i++;
+	}
 	return (strip_quotes(eof));
 }
 
@@ -52,7 +60,7 @@ void	readline_heredoc(t_token *token, char *heredoc_file, char *eof)
 	envp_dict = create_envp_dict(*(token->envp), 0);
 	fd = open(heredoc_file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	buf = readline("> ");
-	while (buf && ft_strncmp(buf, eof, ft_strlen(eof) + 1) != 0)
+	while (buf && ft_strncmp(buf, real_eof, ft_strlen(real_eof) + 1) != 0)
 	{
 		if (need_convert)
 			buf = envsubst_heredoc(buf, envp_dict);

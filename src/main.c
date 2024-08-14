@@ -37,7 +37,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_linkedlist	*token_list;
 	char			*line;
-	char			*home;
 	char			**envp_copy;
 	int				parse_result;
 	t_env			env;
@@ -67,15 +66,11 @@ int	main(int argc, char **argv, char **envp)
 		if (token_list->token_cnt == 1)
 			env.exit_code = execute_single((t_token *) token_list->head->content);
 		else
-		{
-			printf("main :: before execute\n");
 			env.exit_code = execute(token_list);
-		}
-
 		envp_copy = *((t_token *) token_list->head->content)->envp;
-		print_token(token_list);
+//		print_token(token_list);
 		free_token_list(token_list);
 	}
 	free_envp(envp_copy);
-	safe_free((void **) &home);
+	safe_free((void **) &(env.home));
 }

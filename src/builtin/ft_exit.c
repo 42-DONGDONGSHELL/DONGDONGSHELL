@@ -17,12 +17,13 @@ int	is_all_digit(char *str)
 
 int	execute_exit(t_token *token)
 {
-    int	status;
+	int	status;
 
-    ft_putendl_fd("exit", STDERR_FILENO);
-    if (token->argc > 2)
-    	return (perror_many_arg("exit"));
-    if (!token->argv[1])
+	if (token->list_info->token_cnt == 1)
+		ft_putendl_fd("exit", STDERR_FILENO);
+	if (token->argc > 2)
+		return (perror_many_arg("exit"));
+	if (!token->argv[1])
 		status = 0;
 	else if (is_all_digit(token->argv[1]))
 	{

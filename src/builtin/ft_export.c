@@ -73,6 +73,7 @@ int	ft_export(char *str, char ***envv)
 	return (SUCCESS);
 }
 
+// todo : export while문 돌릴 때 중간에 에러 나도 뒤에 삽입 되어야 함.
 int	execute_export(t_token *token)
 {
 	int	i;

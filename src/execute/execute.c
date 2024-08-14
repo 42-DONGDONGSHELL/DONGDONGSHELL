@@ -19,14 +19,15 @@
  */
 void	child(t_token *token, int fd[2], int fd_in, char *heredoc)
 {
-	if (token->list_info->size == token->list_info->token_cnt - 1)
+	if ((t_token *) token->list_info->head->content != token)
 	{
 		if (dup2(fd_in, STDIN_FILENO) < 0)
 			perror_cmd("dup2");
-		close(fd_in);
+		if (fd_in != STDIN_FILENO)
+			close(fd_in);
 	}
 	close(fd[0]);
-	if (token->list_info->size == 0)
+	if ((t_token *) token->list_info->tail->content != token)
 		if (dup2(fd[1], STDOUT_FILENO) < 0)
 			perror_cmd("dup2");
 	close(fd[1]);
@@ -40,9 +41,11 @@ void	make_child(t_token *token, int fd[2], int fd_in, char *heredoc)
 {
 	static int	i;
 
+	if ((t_token *) token->list_info->head->content != token)
+		i = 0;
 	token->list_info->pid[i] = fork();
 	if (token->list_info->pid[i] < 0)
-		perror_cmd("dup2");
+		perror_cmd("fork");
 	if (token->list_info->pid[i] == 0)
 	{
 		ft_signal_default();
@@ -71,6 +74,19 @@ int	wait_child(t_linkedlist *list)
 	return (exit_code);
 }
 
+void init_pid_array(t_linkedlist *token_list)
+{
+	if (token_list->pid != NULL)
+	{
+		free(token_list->pid);
+		token_list->pid = NULL;
+	}
+	token_list->pid = (pid_t *)malloc(sizeof(int) * token_list->token_cnt);
+	if (token_list->pid == NULL)
+		perror_cmd("malloc");
+	memset(token_list->pid, 0, sizeof(int) * token_list->token_cnt);
+}
+
 /**
  * 파이프가 있을 때 사용.
  * @param list
@@ -82,20 +98,20 @@ int	execute(t_linkedlist *list)
 	int	fd_in;
 	char	*last_heredoc;
 	t_token	*token;
+	t_node	*node;
 
 	fd_in = 0;
-	printf("execute :: start\n");
-	while (list->size != 0)
+	init_pid_array(list);
+	node = list->head;
+	while (node != NULL)
 	{
-		printf("execute :: while loop start\n");
-		token = (t_token *) pop(list);
-		printf("execute :: token cmd=%s\n", token->cmd);
-		if (list->size != 0)
+		token = (t_token *) node->content;
+		if (node->next != NULL)
 			pipe(fd);
 		last_heredoc = read_heredoc(token);
 		make_child(token, fd, fd_in, last_heredoc);
 		close(fd[1]);
-		if (fd_in != 0)
+		if (fd_in != STDIN_FILENO)
 			close(fd_in);
 		if (last_heredoc == NULL) // 만약 히어독이 없다면 fd[0] (파이프 읽기)를 fd_in으로
 			fd_in = fd[0];
@@ -104,8 +120,8 @@ int	execute(t_linkedlist *list)
 			close(fd[0]);
 			fd_in = open(last_heredoc, O_RDONLY);
 		}
+		node = node->next;
 	}
-	printf("execute :: end\n");
 	return (wait_child(list));
 }
 

@@ -54,5 +54,6 @@ void	free_linkedlist(t_linkedlist *linkedlist)
 		head_node = prev_node;
 		i++;
 	}
+	safe_free((void **) &(linkedlist->pid));
 	safe_free((void **) &linkedlist);
 }

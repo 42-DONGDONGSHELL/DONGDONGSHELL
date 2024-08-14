@@ -60,8 +60,9 @@ int	expand_tld(char *line, int *i, t_linkedlist *line_list, t_env *env_h)
 	envp_value = find_envp_value(env_h->envp_dict, "HOME");
 	if (*i == 0 || is_whitespace(line[*i - 1]))
 	{
-		if (line[*i + 1] == '/' || line[*i + 1] == '\0' \
+		if ((line[*i + 1] == '/' || line[*i + 1] == '\0' \
 			|| is_whitespace(line[*i + 1]))
+			|| (line[*i + 1] == '=' && line[*i + 2] == '~'))
 		{
 			if (envp_value)
 				push_env_value(line_list, envp_value);
@@ -122,5 +123,6 @@ char	*envsubst_heredoc(char *line, t_envp *envp_dict)
 	}
 	envsubst_line = linkedlist_to_str(line_list);
 	free_linkedlist(line_list);
+	free(line);
 	return (envsubst_line);
 }
