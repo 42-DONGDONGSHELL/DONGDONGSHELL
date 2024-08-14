@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:41 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/13 18:46:05 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:55:01 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ int	ft_cd(char *path, char ***envv)
 
 	if (!(buf = malloc(sizeof(char) * 1000)))
 		return (ERROR);
-	if(!getcwd(buf, sizeof(buf)))
+	if(!getcwd(buf, 1000))
 		return (ERROR);
 	ret = chdir(path);
 	if (ret != 0)
 		return (ERROR);
 	old_pwd = ft_strjoin("PWD=", buf);
-	if(!getcwd(buf, sizeof(buf)))
+	if(!getcwd(buf, 1000))
 		return (ERROR);
 	pwd = ft_strjoin("OLDPWD=", buf);
 	ft_export(old_pwd, envv);
@@ -63,6 +63,6 @@ int	execute_cd(t_token *token)
 	else
 		path = token->argv[1];
 	if (ft_cd(path, token->envp) == ERROR)
-		return (perror_cmd_arg("cd", "path"));
+		return (perror_cmd_arg("cd", path));
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 22:00:21 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:46:09 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		if (ft_strncmp(line, "", 1) == 0)
+		{
+			safe_free((void **) &line);
 			continue ;
+		}
 		parse_result = parse(line, &token_list, &envp_copy, home);
 		safe_free((void **) &line);
 		if (parse_result)
