@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 19:27:37 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:35:51 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,7 @@ t_linkedlist	*parse_and_trim(char *line)
 	return (trimmed_list);
 }
 
-t_env_h	initialize_env(char **envp, char *h)
-{
-	t_envp	*envp_dict;
-	t_env_h	env_h;
-
-	envp_dict = create_envp_dict(envp);
-	env_h.envp_dict = envp_dict;
-	env_h.home = h;
-	return (env_h);
-}
-
-t_linkedlist	*substitute_env(t_linkedlist *trimmed_list, t_env_h *env_h)
+t_linkedlist	*substitute_env(t_linkedlist *trimmed_list, t_env *env)
 {
 	t_linkedlist	*envsubst_list;
 	t_node			*now;
@@ -51,7 +40,7 @@ t_linkedlist	*substitute_env(t_linkedlist *trimmed_list, t_env_h *env_h)
 		}
 		else
 		{
-			push(envsubst_list, envsubst((char *)now->content, env_h));
+			push(envsubst_list, envsubst((char *)now->content, env));
 			envsubst_list->tail->type = now->type;
 			safe_free((void **) &now->content);
 		}
@@ -61,10 +50,9 @@ t_linkedlist	*substitute_env(t_linkedlist *trimmed_list, t_env_h *env_h)
 	return (envsubst_list);
 }
 
-int	parse(char *line, t_linkedlist **tk_list, char ***envp, char *h)
+int	parse(char *line, t_linkedlist **tk_list, char ***envp, t_env *env)
 {
 	t_linkedlist	*trimmed_list;
-	t_env_h			env_h;
 	t_linkedlist	*envsubst_list;
 	t_node			*now;
 	int				operator_check;
@@ -75,8 +63,8 @@ int	parse(char *line, t_linkedlist **tk_list, char ***envp, char *h)
 	operator_check = consecutive_operator_check(trimmed_list);
 	if (operator_check)
 		return (operator_check);
-	env_h = initialize_env(*envp, h);
-	envsubst_list = substitute_env(trimmed_list, &env_h);
+	env->envp_dict = create_envp_dict(*envp, env->exit_code);
+	envsubst_list = substitute_env(trimmed_list, env);
 	*tk_list = create_token_list(envsubst_list, envp);
 	replace_quotes(*tk_list);
 	now = envsubst_list->head;
@@ -85,7 +73,7 @@ int	parse(char *line, t_linkedlist **tk_list, char ***envp, char *h)
 		safe_free((void **) &now->content);
 		now = now->next;
 	}
-	free_envp_dict(env_h.envp_dict);
+	free_envp_dict(env->envp_dict);
 	free_linkedlist(envsubst_list);
 	return (ETC);
 }

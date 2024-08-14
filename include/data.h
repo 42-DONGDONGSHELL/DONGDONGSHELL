@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 21:42:52 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 19:30:02 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:18:49 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ typedef struct s_token
 	t_linkedlist	*list_info;
 }	t_token;
 
-typedef struct s_env_h
+typedef struct s_env
 {
 	char			*home;
+	int				exit_code;
 	t_envp			*envp_dict;
-}	t_env_h;
+}	t_env;
 
 typedef struct s_quote
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envsubst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       #+#  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-08-01 17:34:18 by drhee             #+#    #+#             */
-/*   Updated: 2024-08-01 17:34:18 by drhee            ###   ########.fr       */
+/*   Created: 2024/08/01 17:34:18 by drhee             #+#    #+#             */
+/*   Updated: 2024/08/14 15:49:51 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	expand_dlr(char *line, int *i, t_linkedlist *line_list, t_envp *envp_dict)
 
 	if (line[*i + 1] == '?')
 	{
-		push(line_list, &(envp_dict->value[0]));
+		push_env_value(line_list, &(envp_dict->value[0]));
 		*i = *i + 2;
 		return (1);
 	}
@@ -53,7 +53,7 @@ int	expand_dlr(char *line, int *i, t_linkedlist *line_list, t_envp *envp_dict)
 	return (0);
 }
 
-int	expand_tld(char *line, int *i, t_linkedlist *line_list, t_env_h *env_h)
+int	expand_tld(char *line, int *i, t_linkedlist *line_list, t_env *env_h)
 {
 	char	*envp_value;
 
@@ -74,7 +74,7 @@ int	expand_tld(char *line, int *i, t_linkedlist *line_list, t_env_h *env_h)
 	return (0);
 }
 
-char	*envsubst(char *line, t_env_h *env_h)
+char	*envsubst(char *line, t_env *env)
 {
 	t_linkedlist	*line_list;
 	char			*envsubst_line;
@@ -86,12 +86,12 @@ char	*envsubst(char *line, t_env_h *env_h)
 	{
 		if (line[i] == '$' && is_in_quotes(line, &(line[i])) != 1)
 		{
-			if (expand_dlr(line, &i, line_list, env_h->envp_dict) == 1)
+			if (expand_dlr(line, &i, line_list, env->envp_dict) == 1)
 				continue ;
 		}
 		else if (line[i] == '~' && is_in_quotes(line, &(line[i])) == 0)
 		{
-			if (expand_tld(line, &i, line_list, env_h) == 1)
+			if (expand_tld(line, &i, line_list, env) == 1)
 				continue ;
 		}
 		push(line_list, &(line[i]));

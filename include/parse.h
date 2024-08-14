@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:53:44 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 19:28:10 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/14 15:35:07 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 // envp.c
 char			*find_envp_value(t_envp *envp_dict, char *key);
 void			free_envp_dict(t_envp *envp_dict);
-t_envp			*create_envp_dict(char **envp);
+t_envp			*create_envp_dict(char **envp, int exit_code);
 
 // envsubst.c
-char			*envsubst(char *line, t_env_h *env_data);
+char			*envsubst(char *line, t_env *env_data);
 char			*envsubst_heredoc(char *line, t_envp *envp_dict);
 
 // free_token.c
@@ -37,7 +37,7 @@ int				is_operator(char c);
 t_linkedlist	*parse_operator(char *line);
 
 // parse.c
-int				parse(char *line, t_linkedlist **tk_list, char ***envp, char *h);
+int				parse(char *line, t_linkedlist **tk_list, char ***envp, t_env *env);
 
 // quote.c
 int				is_in_quotes(const char *str, const char *target_addr);
