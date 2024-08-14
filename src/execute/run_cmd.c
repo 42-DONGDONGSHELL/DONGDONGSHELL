@@ -67,10 +67,18 @@ char *find_executable_path(char *cmd, char **envp)
  */
 int	search_cmd(t_token *token)
 {
-	char	*bin_path;
+	char		*bin_path;
+	struct stat	path_stat;
+
 	bin_path = find_executable_path(token->cmd, *(token->envp));
 	if (bin_path == NULL)
 		exit(perror_cmd_not_found(token->cmd));
+	if (stat(bin_path, &path_stat) < 0)
+		exit(perror_etc());
+	if ((path_stat.st_mode & S_IFMT) == S_IFDIR)
+		exit(perror_is_dir(bin_path));
+	if (access(bin_path, X_OK) != 0)
+		exit(perror_no_permission(bin_path));
 	execve(bin_path, token->argv, *(token->envp));
 	exit(perror_cmd_not_found(token->cmd));
 }
@@ -83,7 +91,6 @@ void	start_cmd(t_token *token, char *heredoc)
 	int	ret;
 	int	exit_code;
 
-	(void) heredoc;
 	if (handle_redirection(token, heredoc))
 		exit(1);
 	ret = is_builtin(token);

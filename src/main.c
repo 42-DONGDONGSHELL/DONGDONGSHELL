@@ -57,8 +57,11 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		if (token_list->token_cnt == 1)
-		{
 			execute_single((t_token *) token_list->head->content);
+		else
+		{
+			printf("main :: before execute\n");
+			execute(token_list);
 		}
 		envp_copy = *((t_token *) token_list->head->content)->envp;
 		print_token(token_list);

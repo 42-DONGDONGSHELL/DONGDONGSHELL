@@ -84,9 +84,12 @@ int	execute(t_linkedlist *list)
 	t_token	*token;
 
 	fd_in = 0;
+	printf("execute :: start\n");
 	while (list->size != 0)
 	{
+		printf("execute :: while loop start\n");
 		token = (t_token *) pop(list);
+		printf("execute :: token cmd=%s\n", token->cmd);
 		if (list->size != 0)
 			pipe(fd);
 		last_heredoc = read_heredoc(token);
@@ -102,6 +105,7 @@ int	execute(t_linkedlist *list)
 			fd_in = open(last_heredoc, O_RDONLY);
 		}
 	}
+	printf("execute :: end\n");
 	return (wait_child(list));
 }
 
@@ -133,5 +137,7 @@ int	execute_single(t_token *token)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		exit_code = WEXITSTATUS(status);
+	if (last_heredoc != NULL)
+		free(last_heredoc);
 	return (exit_code);
 }

@@ -29,10 +29,9 @@ char	*delete_quotes_and_check(char *eof, int *need_convert)
 {
 	if ((eof[0] == '\'' && eof[ft_strlen(eof) - 1] == '\'')
 		|| (eof[0] == '\"' && eof[ft_strlen(eof) - 1] == '\"'))
-		*need_convert = 1;
-	else
 		*need_convert = 0;
-	// todo : 동현님 코드에서 ' , " 제거하는 것 사용
+	else
+		*need_convert = 1;
 	return (strip_quotes(eof));
 }
 
@@ -53,7 +52,7 @@ void	readline_heredoc(t_token *token, char *heredoc_file, char *eof)
 	envp_dict = create_envp_dict(*(token->envp));
 	fd = open(heredoc_file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	buf = readline("> ");
-	while (buf && ft_strncmp(buf, eof, ft_strlen(eof)))
+	while (buf && ft_strncmp(buf, eof, ft_strlen(eof) + 1) != 0)
 	{
 		if (need_convert)
 			buf = envsubst_heredoc(buf, envp_dict);
@@ -83,7 +82,7 @@ char	*read_heredoc(t_token *token)
 		if (files->type == 5)
 		{
 			ft_signal_heredoc();
-			if (!heredoc_file)
+			if (heredoc_file)
 				free(heredoc_file);
 			heredoc_file = create_heredoc_filepath(token);
 			readline_heredoc(token, heredoc_file, files->next->content);
@@ -91,5 +90,5 @@ char	*read_heredoc(t_token *token)
 		}
 		files = files->next;
 	}
-	return (NULL);
+	return (heredoc_file);
 }

@@ -26,11 +26,14 @@ int	ft_cd(char *path, char ***envv)
 		return (ERROR);
 	ret = chdir(path);
 	if (ret != 0)
+	{
+		free(buf);
 		return (ERROR);
-	old_pwd = ft_strjoin("PWD=", buf);
+	}
+	old_pwd = ft_strjoin("OLDPWD=", buf);
 	if(!getcwd(buf, 1000))
 		return (ERROR);
-	pwd = ft_strjoin("OLDPWD=", buf);
+	pwd = ft_strjoin("PWD=", buf);
 	ft_export(old_pwd, envv);
 	ft_export(pwd, envv);
 	free(buf);
@@ -54,7 +57,9 @@ int	execute_cd(t_token *token)
 		if (!path)
 			return (perror_not_set("cd", "HOME"));
 	}
-	else if (ft_strncmp(token->argv[1], "-", 2))
+	else if (ft_strncmp(token->argv[1], "", 2) == 0)
+		return (SUCCESS);
+	else if (ft_strncmp(token->argv[1], "-", 2) == 0)
 	{
 		path = key_to_value_loc("OLDPWD", *(token->envp));
 		if (!path)
