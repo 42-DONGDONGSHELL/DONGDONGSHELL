@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:37:08 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/06 19:27:05 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/14 14:21:55 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,30 @@ void	*pop(t_linkedlist *linkedlist)
 	{
 		linkedlist->tail = pop_node->prev;
 		linkedlist->tail->next = NULL;
+	}
+	safe_free((void **) &pop_node);
+	linkedlist->size--;
+	return (content);
+}
+
+void	*popleft(t_linkedlist *linkedlist)
+{
+	void		*content;
+	t_node		*pop_node;
+
+	if (linkedlist->size == 0)
+		return (NULL);
+	content = linkedlist->head->content;
+	pop_node = linkedlist->head;
+	if (linkedlist->size == 1)
+	{
+		linkedlist->head = NULL;
+		linkedlist->tail = NULL;
+	}
+	else
+	{
+		linkedlist->head = pop_node->next;
+		linkedlist->head->prev = NULL;
 	}
 	safe_free((void **) &pop_node);
 	linkedlist->size--;
