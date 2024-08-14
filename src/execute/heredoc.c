@@ -49,7 +49,7 @@ void	readline_heredoc(t_token *token, char *heredoc_file, char *eof)
 	t_envp	*envp_dict;
 
 	real_eof = delete_quotes_and_check(eof, &need_convert);
-	envp_dict = create_envp_dict(*(token->envp));
+	envp_dict = create_envp_dict(*(token->envp), 0);
 	fd = open(heredoc_file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	buf = readline("> ");
 	while (buf && ft_strncmp(buf, eof, ft_strlen(eof) + 1) != 0)

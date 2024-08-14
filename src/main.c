@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/14 10:46:09 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/14 16:03:17 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,17 @@ char	*set_home(char **envp)
 	t_envp	*envp_dict;
 	char	*home;
 
-	envp_dict = create_envp_dict(envp);
+	envp_dict = create_envp_dict(envp, 0);
 	home = ft_safe_strdup(find_envp_value(envp_dict, "HOME"));
 	free_envp_dict(envp_dict);
 	return (home);
+}
+
+void	init_env(t_env *env, char **envp)
+{
+	env->home = set_home(envp);
+	env->exit_code = 0;
+	env->envp_dict = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -33,11 +40,11 @@ int	main(int argc, char **argv, char **envp)
 	char			*home;
 	char			**envp_copy;
 	int				parse_result;
-	int				exit_code;
+	t_env			env;
 
 	(void) argc;
 	(void) argv;
-	home = set_home(envp);
+	init_env(&env, envp);
 	envp_copy = ft_envpdup(envp);
 	while (1)
 	{
@@ -50,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 			safe_free((void **) &line);
 			continue ;
 		}
-		parse_result = parse(line, &token_list, &envp_copy, home);
+		parse_result = parse(line, &token_list, &envp_copy, &env);
 		safe_free((void **) &line);
 		if (parse_result)
 		{
@@ -58,13 +65,13 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		if (token_list->token_cnt == 1)
-			exit_code = execute_single((t_token *) token_list->head->content);
+			env.exit_code = execute_single((t_token *) token_list->head->content);
 		else
 		{
 			printf("main :: before execute\n");
-			exit_code = execute(token_list);
+			env.exit_code = execute(token_list);
 		}
-		printf("MAIN :: exit_code = %d\n", exit_code);
+
 		envp_copy = *((t_token *) token_list->head->content)->envp;
 		print_token(token_list);
 		free_token_list(token_list);
