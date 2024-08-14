@@ -1,4 +1,20 @@
 #include "../../include/ms_execute.h"
+#include "../../include/ms_error.h"
+
+int	check_file(char *path)
+{
+	struct stat	path_stat;
+
+	if (access(path, F_OK) != 0)
+		return (perror_no_file_dir(path));
+	if (stat(path, &path_stat) < 0)
+		return (perror_etc());
+	if ((path_stat.st_mode & S_IFMT) == S_IFDIR)
+		return (perror_is_dir(path));
+	if (access(path, X_OK) != 0)
+		return (perror_no_permission(path));
+	return (perror_etc());
+}
 
 /**
  * "<" 나 "<<" 와 같이 input redirection일 경우 사용.
@@ -9,13 +25,13 @@ int	redirect_readfile(char *path)
 	int	fd;
 
 	if ((fd = open(path, O_RDONLY)) < 0)
-		return (ERROR); // todo : error handling
+		return (check_file(path));
 	else if (fd == 0)
 		return (SUCCESS);
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		close(fd);
-		return (ERROR); // todo : error handling
+		return (perror_cmd("dup2"));
 	}
 	close(fd);
 	return (SUCCESS);
@@ -35,7 +51,7 @@ int	redirect_writefile(char *path, int need_reset)
 	else
 		fd = open(path, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd < 0)
-		return (ERROR); // todo : ERROR handling
+		return (check_file(path)); // todo : ERROR handling
 	else if (fd == 0 || fd == 1)
 		return (SUCCESS);
 	if (dup2(fd, STDOUT_FILENO) < 0)
