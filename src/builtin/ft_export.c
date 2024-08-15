@@ -29,8 +29,6 @@ int is_valid_env(const char *str)
 			return 0;
 		i++;
 	}
-	if (str[i] != '=')
-		return 0;
 	return 1;
 }
 
@@ -41,7 +39,9 @@ int is_same_env_key(const char *str, const char *envv)
 		str++;
 		envv++;
 	}
-	return *str == '=' && *envv == '=';
+	if ((*envv == '\0' || *envv == '=') && (*str == '\0' || *str == '='))
+		return (1);
+	return (0);
 }
 
 int	ft_export(char *str, char ***envv)
@@ -55,6 +55,8 @@ int	ft_export(char *str, char ***envv)
 	while ((*envv)[++i])
 		if (is_same_env_key(str, (*envv)[i]))
 		{
+			if (!is_declared(str))
+				return (SUCCESS);
 			free((*envv)[i]);
 			(*envv)[i] = ft_strdup(str);
 			return (SUCCESS);
@@ -73,22 +75,34 @@ int	ft_export(char *str, char ***envv)
 	return (SUCCESS);
 }
 
-// todo : export while문 돌릴 때 중간에 에러 나도 뒤에 삽입 되어야 함.
+void	print_all_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		ft_putendl_fd(env[i], 1);
+		i++;
+	}
+}
+
 int	execute_export(t_token *token)
 {
 	int	i;
 	int	ret;
+	int	status;
 
-	ret = 0;
+	status = SUCCESS;
 	if (token->argc == 1)
-		ret = execute_env(token);
+		print_all_env(*(token->envp));
 	i = 1;
 	while (token->argv[i])
 	{
 		ret = ft_export(token->argv[i], token->envp);
 		if (ret != 0)
-			return (ret);
+			status = ret;
 		i++;
 	}
-	 return (ret);
+	return (status);
 }

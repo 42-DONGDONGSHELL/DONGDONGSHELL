@@ -60,9 +60,11 @@ char	**split_envp(char *str)
 	delimiter = ft_strchr(str, '=');
 	if (delimiter == NULL)
 	{
-		s2[0] = NULL;
+		// 기존 코드 segmentaion fault 발생 문제로 인해 export a와 같이 "=" 없이 환경변수 등록 시 key는 파라미터로 들어온 str 전체, value는 NULL로 수정
+		s2[0] = safe_malloc((ft_strlen(str) + 1) * sizeof(char));
+		ft_strlcpy(s2[0], str, ft_strlen(str) + 1);
 		s2[1] = NULL;
-		return (NULL);
+		return (s2);
 	}
 	key_len = delimiter - str;
 	value_len = ft_strlen(delimiter + 1);
