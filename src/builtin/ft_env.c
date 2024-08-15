@@ -12,6 +12,20 @@
 
 #include "../../include/minishell.h"
 
+int	is_declared(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char *key_to_value_loc(char *key, char **envv)
 {
 	size_t	key_len;
@@ -35,6 +49,11 @@ int	ft_env(char **envv)
 	i = 0;
 	while (envv[i])
 	{
+		if (!is_declared(envv[i]))
+		{
+			i++;
+			continue ;
+		}
 		ft_putendl_fd(envv[i], 1);
 		i++;
 	}

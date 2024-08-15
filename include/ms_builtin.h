@@ -14,4 +14,6 @@ int	execute_pwd(void);
 int	execute_unset(t_token *token);
 int	execute_exit(t_token *token);
 
+int	is_declared(char *str);
+
 #endif
