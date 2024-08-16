@@ -50,7 +50,7 @@ int	ft_export(char *str, char ***envv)
 	char	**new_envv;
 
 	if (!is_valid_env(str))
-		return (perror_identifier("export", str)); // todo : 생각 필요함.
+		return (perror_identifier("export", str));
 	i = -1;
 	while ((*envv)[++i])
 		if (is_same_env_key(str, (*envv)[i]))

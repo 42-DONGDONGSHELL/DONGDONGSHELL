@@ -41,7 +41,7 @@ int	perror_not_set(char *cmd, char *arg)
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(" ", 2);
 	ft_putendl_fd("not set", 2);
-	return (1);
+	return (ERROR);
 }
 
 int	perror_is_dir(char *arg)
@@ -61,12 +61,12 @@ int	perror_cmd_not_found(char *cmd)
 
 int	perror_no_permission(char *arg)
 {
-	return (perror_cmd_msg(arg, "Permission denied", 127));
+	return (perror_cmd_msg(arg, "Permission denied", 126));
 }
 
 int	perror_etc()
 {
 	ft_putstr_fd("ddsehll: ", 2);
 	ft_putendl_fd("unexpected error", 2);
-	return (1);
+	return (ERROR);
 }

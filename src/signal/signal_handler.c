@@ -11,8 +11,8 @@ void	sigint_prompt_handler(int signum)
 {
 	(void)signum;
 	ft_putstr_fd("\n", STDERR_FILENO);
-	// 커서가 다음줄로 옮겨간것을 readline에 적용
-	// 현재 버퍼를 비워줌
-	// readline 메시지를 다시 출력
-	// $? 출력 시 1로 나오게 수정.
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	// todo : 전역 변수를 1로 만들기.
 }

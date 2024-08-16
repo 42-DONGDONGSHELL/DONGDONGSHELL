@@ -32,6 +32,5 @@ int	execute_exit(t_token *token)
 	}
 	else
 		status = perror_numeric("exit", token->argv[1]);
-	// todo : free에 대한 고민.
 	exit(status);
 }

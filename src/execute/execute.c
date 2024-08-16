@@ -6,13 +6,14 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 16:37:59 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/13 21:58:03 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/16 14:53:32 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ms_execute.h"
 #include "../../include/ms_signal.h"
 #include "../../include/ms_error.h"
+#include "../../include/ms_wait.h"
 
 /**
  * 자식 프로세스가 실행하는 함수
@@ -48,7 +49,6 @@ void	make_child(t_token *token, int fd[2], int fd_in, char *heredoc)
 		perror_cmd("fork");
 	if (token->list_info->pid[i] == 0)
 	{
-		ft_signal_default();
 		child(token, fd, fd_in, heredoc);
 	}
 	ft_signal_ignore();
@@ -59,19 +59,15 @@ int	wait_child(t_linkedlist *list)
 {
 	int	i;
 	int	status;
-	int	exit_code;
 
 	i = 0;
-	exit_code = 0;
 	while (i < list->token_cnt)
 	{
 		waitpid(list->pid[i], &status, 0);
 		i++;
 	}
-	if (WIFEXITED(status))
-		exit_code = WEXITSTATUS(status);
 	ft_signal_prompt();
-	return (exit_code);
+	return (status_to_exit_code(status));
 }
 
 void init_pid_array(t_linkedlist *token_list)
@@ -138,7 +134,6 @@ int	execute_single(t_token *token)
 	char *last_heredoc;
 
 	tp = is_builtin(token);
-	exit_code = 0;
 	if (tp == 2 || tp == 5 || tp == 7 || (tp == 4 && token->argv[1] != NULL))
 	{
 		exit_code = do_builtin(token, tp);
@@ -147,13 +142,14 @@ int	execute_single(t_token *token)
 	last_heredoc = read_heredoc(token);
 	pid = fork();
 	if (pid < 0)
-		perror_cmd("dup2");
+		perror_cmd("fork");
 	if (pid == 0)
 		start_cmd(token, last_heredoc);
+	ft_signal_ignore();
 	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		exit_code = WEXITSTATUS(status);
+	exit_code = status_to_exit_code(status);
 	if (last_heredoc != NULL)
 		free(last_heredoc);
+	ft_signal_prompt();
 	return (exit_code);
 }

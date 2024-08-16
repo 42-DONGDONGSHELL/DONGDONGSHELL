@@ -51,13 +51,13 @@ int	redirect_writefile(char *path, int need_reset)
 	else
 		fd = open(path, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd < 0)
-		return (check_file(path)); // todo : ERROR handling
+		return (check_file(path));
 	else if (fd == 0 || fd == 1)
 		return (SUCCESS);
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		close(fd);
-		return (ERROR); // todo : ERROR handling
+		return (perror_cmd("dup2"));
 	}
 	close(fd);
 	return (SUCCESS);
