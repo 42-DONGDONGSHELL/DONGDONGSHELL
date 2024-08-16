@@ -19,6 +19,8 @@ int	is_builtin(t_token *token)
 {
 	int	len;
 
+	if (token->cmd == NULL)
+		return (-1);
 	len = ft_strlen(token->cmd) + 1;
 	if (ft_strncmp(token->cmd, "echo", len) == 0)
 		return (1);
