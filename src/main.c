@@ -6,15 +6,13 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/14 16:03:17 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/16 16:37:53 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../include/ms_execute.h"
 #include "../include/ms_signal.h"
-
-int	g_exit_code = 0;
 
 void	sigterm_prompt_handler(void)
 {
@@ -59,6 +57,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		token_list = NULL;
 		line = readline("minishell$ ");
+		if (g_sigint)
+			env.exit_code = 1;
 		if (!line)
 		{
 			sigterm_prompt_handler();
@@ -69,13 +69,16 @@ int	main(int argc, char **argv, char **envp)
 			safe_free((void **) &line);
 			continue ;
 		}
+		add_history(line);
 		parse_result = parse(line, &token_list, &envp_copy, &env);
 		safe_free((void **) &line);
 		if (parse_result)
 		{
 			print_parse_error(parse_result);
+			env.exit_code = 258;
 			continue ;
 		}
+		g_sigint = 0;
 		if (token_list->token_cnt == 1)
 			env.exit_code = execute_single((t_token *) token_list->head->content);
 		else

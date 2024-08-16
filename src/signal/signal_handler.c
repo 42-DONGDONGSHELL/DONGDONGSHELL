@@ -14,5 +14,5 @@ void	sigint_prompt_handler(int signum)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	// todo : 전역 변수를 1로 만들기.
+	g_sigint = 1;
 }

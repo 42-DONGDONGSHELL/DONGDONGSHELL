@@ -103,7 +103,7 @@ char	*read_heredoc(t_token *token)
 			} else {
 				ft_signal_ignore();
 				waitpid(pid, &status, 0);
-				status_to_exit_code(status); // todo : 전역 변수로 받기. (^C인 경우에만 1 return, 나머지 0 return)
+				g_sigint = status_to_exit_code(status); // todo : 전역 변수로 받기. (^C인 경우에만 1 return, 나머지 0 return)
 			}
 		}
 		files = files->next;
