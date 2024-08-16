@@ -86,6 +86,8 @@ int	search_cmd(t_token *token)
 	struct stat	path_stat;
 
 	bin_path = find_executable_path(token->cmd, *(token->envp));
+	if (bin_path == NULL && token->file_head != NULL)
+		exit(SUCCESS);
 	if (bin_path == NULL)
 		exit(perror_cmd_not_found(token->cmd));
 	if (stat(bin_path, &path_stat) < 0)
