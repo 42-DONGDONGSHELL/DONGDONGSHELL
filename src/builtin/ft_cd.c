@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:41 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/14 10:55:01 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:27:09 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 
 int	ft_cd(char *path, char ***envv)
 {
-	int	ret;
+	int		ret;
 	char	*buf;
 	char	*pwd;
 	char	*old_pwd;
 
-	if (!(buf = malloc(sizeof(char) * 1000)))
-		return (ERROR);
-	if(!getcwd(buf, 1000))
+	buf = safe_malloc(sizeof(char) * 1000);
+	if (!getcwd(buf, 1000))
 		return (ERROR);
 	ret = chdir(path);
 	if (ret != 0)
@@ -31,7 +30,7 @@ int	ft_cd(char *path, char ***envv)
 		return (ERROR);
 	}
 	old_pwd = ft_strjoin("OLDPWD=", buf);
-	if(!getcwd(buf, 1000))
+	if (!getcwd(buf, 1000))
 		return (ERROR);
 	pwd = ft_strjoin("PWD=", buf);
 	ft_export(old_pwd, envv);

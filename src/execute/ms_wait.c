@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_wait.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 16:17:51 by dongclee          #+#    #+#             */
+/*   Updated: 2024/08/16 16:17:58 by dongclee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 int	ms_w_int(int w)
 {
 	return (*(int *)&(w));
@@ -26,5 +38,5 @@ int	status_to_exit_code(int status)
 		exit_code = ms_wexitstatus(status);
 	else
 		exit_code = ms_wstatus(status) + 128;
-	return exit_code;
+	return (exit_code);
 }

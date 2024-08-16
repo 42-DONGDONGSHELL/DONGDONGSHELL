@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 16:25:08 by dongclee          #+#    #+#             */
+/*   Updated: 2024/08/16 16:25:09 by dongclee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/ms_execute.h"
 #include "../../include/ms_error.h"
 
@@ -24,7 +36,8 @@ int	redirect_readfile(char *path)
 {
 	int	fd;
 
-	if ((fd = open(path, O_RDONLY)) < 0)
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
 		return (check_file(path));
 	else if (fd == 0)
 		return (SUCCESS);
@@ -75,13 +88,13 @@ int	handle_redirection(t_token *token, char *heredoc)
 	file = (t_node *) token->file_head;
 	while (file)
 	{
-		if (file->type == 4) // 1 : "<"
+		if (file->type == 4)
 			ret = redirect_readfile(file->next->content);
-		else if (file->type == 5) // 2 : "<<"
+		else if (file->type == 5)
 			ret = redirect_readfile(heredoc);
-		else if (file->type == 2) // 3 : ">"
+		else if (file->type == 2)
 			ret = redirect_writefile(file->next->content, 1);
-		else if (file->type == 3) // 4 : ">>"
+		else if (file->type == 3)
 			ret = redirect_writefile(file->next->content, 0);
 		file = file->next->next;
 	}

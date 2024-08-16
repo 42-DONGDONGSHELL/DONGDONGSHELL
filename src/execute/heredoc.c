@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 16:20:38 by dongclee          #+#    #+#             */
+/*   Updated: 2024/08/16 17:11:14 by dongclee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/ms_execute.h"
 #include "../../include/ms_signal.h"
 #include "../../include/ms_error.h"
@@ -14,7 +26,8 @@ char	*create_heredoc_filepath(t_token *token)
 	char		*file_path;
 
 	num = ft_itoa(i++);
-	if ((base_path = key_to_value_loc("TMPDIR", *(token->envp))) == NULL)
+	base_path = key_to_value_loc("TMPDIR", *(token->envp));
+	if (base_path == NULL)
 		base_path = "/tmp/";
 	file_name = ft_strjoin(".heredoc_no", num);
 	file_path = ft_strjoin(base_path, file_name);
@@ -75,38 +88,51 @@ void	readline_heredoc(char **envp, char *heredoc_file, char *eof)
 	exit(0);
 }
 
+char	*process_heredoc_file(t_token *token, t_node *files)
+{
+	char	*h_file;
+	int		pid;
+	int		status;
+
+	h_file = create_heredoc_filepath(token);
+	pid = fork();
+	if (pid < 0)
+		perror_cmd("fork");
+	if (pid == 0)
+	{
+		ft_signal_heredoc();
+		readline_heredoc(*(token->envp), h_file, files->next->content);
+		free_token_list(token->list_info);
+	}
+	else
+	{
+		ft_signal_ignore();
+		waitpid(pid, &status, 0);
+		status_to_exit_code(status);
+	}
+	return (h_file);
+}
+
 /**
  * 히어독 파일 읽기.
  * return : 히어독 있었다면 마지막 히어독 경로, 히어독 없다면 NULL.
  */
 char	*read_heredoc(t_token *token)
 {
-	char	*heredoc_file;
+	char	*h_file;
 	t_node	*files;
-	int		pid;
-	int		status;
 
 	files = token->file_list->head;
-	heredoc_file = NULL;
-	while (files) {
-		if (files->type == 5) {
-			if (heredoc_file)
-				free(heredoc_file);
-			heredoc_file = create_heredoc_filepath(token);
-			pid = fork();
-			if (pid < 0)
-				perror_cmd("fork");
-			if (pid == 0) {
-				ft_signal_heredoc();
-				readline_heredoc(*(token->envp), heredoc_file, files->next->content);
-				free_token_list(token->list_info);
-			} else {
-				ft_signal_ignore();
-				waitpid(pid, &status, 0);
-				g_sigint = status_to_exit_code(status); // todo : 전역 변수로 받기. (^C인 경우에만 1 return, 나머지 0 return)
-			}
+	h_file = NULL;
+	while (files)
+	{
+		if (files->type == 5)
+		{
+			if (h_file)
+				free(h_file);
+			h_file = process_heredoc_file(token, files);
 		}
 		files = files->next;
 	}
-	return (heredoc_file);
+	return (h_file);
 }

@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "minishell.h": "c"
+        "minishell.h": "c",
+        "ms_error.h": "c",
+        "ms_builtin.h": "c",
+        "ms_execute.h": "c"
     }
 }

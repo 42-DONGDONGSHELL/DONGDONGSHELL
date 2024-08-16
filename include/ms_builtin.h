@@ -14,6 +14,7 @@ int	execute_pwd(void);
 int	execute_unset(t_token *token);
 int	execute_exit(t_token *token);
 
-int	is_declared(char *str);
+int	    is_declared(char *str);
+void	print_all_env(char **env);
 
 #endif

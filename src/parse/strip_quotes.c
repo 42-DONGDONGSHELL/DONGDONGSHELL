@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strip_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 20:10:01 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/12 11:54:11 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/16 16:26:05 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	replace_quotes_in_token(t_token *token)
 		if (now_file->type == HEREDOC)
 		{
 			now_file = now_file->next->next;
-			continue;
+			continue ;
 		}
 		new_str = strip_quotes(now_file->content);
 		safe_free((void **)&now_file->content);

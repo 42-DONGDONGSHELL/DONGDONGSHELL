@@ -26,4 +26,7 @@ int		search_cmd(t_token *token);
 void	start_cmd(t_token *token, char *heredoc);
 int		execute_single(t_token *token);
 
+int	    handle_fd_in(int fd[2], char *last_heredoc);
+void	init_pid_array(t_linkedlist *token_list);
+
 #endif

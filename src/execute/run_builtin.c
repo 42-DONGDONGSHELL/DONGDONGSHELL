@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_builtin.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 16:09:20 by dongclee          #+#    #+#             */
+/*   Updated: 2024/08/16 16:17:39 by dongclee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/ms_execute.h"
 
 /**
@@ -46,7 +58,7 @@ int	do_builtin(t_token *token, int builtin_idx)
 		ret = execute_unset(token);
 	else if (builtin_idx == 6)
 		ret = execute_env(token);
-	 else if (builtin_idx == 7)
-	 	ret = execute_exit(token);
+	else if (builtin_idx == 7)
+		ret = execute_exit(token);
 	return (ret);
 }

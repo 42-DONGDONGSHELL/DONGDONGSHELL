@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
 /*   Updated: 2024/08/16 16:36:52 by drhee            ###   ########.fr       */
@@ -35,7 +35,7 @@
 # include "data_struct.h"
 # include "parse.h"
 
-extern int	g_sigint = 0;
+extern int	g_sigint;
 
 # define FALSE 0
 # define TRUE 1
