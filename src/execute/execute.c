@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 16:37:59 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/16 17:04:28 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:22:32 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	make_child(t_token *token, int fd[2], int fd_in, char *heredoc)
 {
 	static int	i;
 
-	if ((t_token *) token->list_info->head->content != token)
+	if ((t_token *) token->list_info->head->content == token)
 		i = 0;
 	token->list_info->pid[i] = fork();
 	if (token->list_info->pid[i] < 0)

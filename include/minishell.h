@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:36:25 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/16 16:36:52 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/16 17:57:35 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@
 # include "data.h"
 # include "data_struct.h"
 # include "parse.h"
+# include "ms_execute.h"
+# include "ms_signal.h"
+# include "ms_wait.h"
 
 extern int	g_sigint;
 
@@ -54,14 +57,12 @@ enum	e_token
 	QUOTES = 7,
 };
 
-// utils.c
 void	safe_free(void **ptr);
 void	*safe_malloc(size_t size);
 int		is_whitespace(char c);
 int		is_str_whitespace(char *str);
 int		array_size(char **arr);
 
-// ft_utils.c
 char	*ft_safe_strdup(const char *s1);
 char	*ft_safe_substr(char const *s, unsigned int start, size_t len);
 char	**ft_envpdup(char **envp);

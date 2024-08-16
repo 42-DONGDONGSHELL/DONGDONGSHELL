@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:58 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/16 15:54:32 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/16 18:43:33 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	migrate_except_deleted(char ***rtn, char **envp, char *del)
 	del_len = ft_strlen(del);
 	while (envp[i] != NULL)
 	{
-		if (ft_strncmp(envp[i], del, del_len) == 0 && envp[i][del_len] == '=')
+		if (ft_strncmp(envp[i], del, del_len) == 0
+			&& (envp[i][del_len] == '=' || envp[i][del_len] == '\0'))
 		{
 			i++;
 			continue ;
@@ -62,7 +63,8 @@ char	**create_new_envv(char **envp, char *del)
 	need_delete = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], del, del_len) == 0 && envp[i][del_len] == '=')
+		if (ft_strncmp(envp[i], del, del_len) == 0
+			&& (envp[i][del_len] == '=' || envp[i][del_len] == '\0'))
 			need_delete = 1;
 		i++;
 	}
@@ -105,6 +107,7 @@ int	execute_unset(t_token *token)
 			continue ;
 		}
 		new_envv = create_new_envv(*(token->envp), token->argv[i]);
+		free_envp(*(token->envp));
 		*(token->envp) = new_envv;
 		i++;
 	}

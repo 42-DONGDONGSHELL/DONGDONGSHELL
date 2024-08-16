@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ms_error.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 17:50:22 by drhee             #+#    #+#             */
+/*   Updated: 2024/08/16 17:51:09 by drhee            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MS_ERROR_H
-#define MS_ERROR_H
+# define MS_ERROR_H
 
 # include "minishell.h"
 
 int	perror_cmd(char *cmd);
 int	perror_arg(char *arg);
 int	perror_cmd_arg(char *cmd, char *arg);
-int	perror_cmd_arg_msg(char *cmd, char *arg, char *msg, int	exit_code);
-int	perror_cmd_msg(char *cmd, char *msg, int	exit_code);
+int	perror_cmd_arg_msg(char *cmd, char *arg, char *msg, int exit_code);
+int	perror_cmd_msg(char *cmd, char *msg, int exit_code);
 
 int	perror_identifier(char *cmd, char *arg);
-int perror_numeric(char *cmd, char *arg);
-int perror_many_arg(char *cmd);
+int	perror_numeric(char *cmd, char *arg);
+int	perror_many_arg(char *cmd);
 int	perror_not_set(char *cmd, char *arg);
 int	perror_is_dir(char *arg);
 int	perror_no_file_dir(char *arg);
