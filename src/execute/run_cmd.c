@@ -12,56 +12,15 @@
 
 #include "../../include/ms_execute.h"
 #include "../../include/ms_error.h"
-#include "../../include/ms_signal.h"
 
-/**
- * 환경 변수 PATH를 읽어 bin경로들에 대한 문자열 배열을 반환함.
- */
-char	**get_bin_paths(char **envp)
+char	*check_find_in_path(char *cmd, char **bin_paths)
 {
-	char	*path;
-
-	path = key_to_value_loc("PATH", envp);
-	if (path == NULL)
-		return (NULL);
-	return (ft_split(path, ':'));
-}
-
-/**
- * 배열을 동적할당 free
- */
-void	free_arr(char **arr)
-{
-	int	i;
-
-	if (arr == NULL)
-		return ;
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-/**
- * bin path 문자열 배열을 확인하며 해당 명령어가 수행 가능한지 찾고 경로를 반환 함.
- */
-char	*find_executable_path(char *cmd, char **envp)
-{
-	char	**bin_paths;
 	char	*bin_path;
 	char	*tmp_path;
 	int		i;
 
-	bin_path = NULL;
-	bin_paths = get_bin_paths(envp);
-	if (bin_paths == NULL)
-		return (NULL);
-	if (access(cmd, F_OK) == 0)
-		bin_path = ft_strdup(cmd);
 	i = 0;
+	bin_path = NULL;
 	while (bin_path == NULL && bin_paths[i])
 	{
 		tmp_path = ft_strjoin(bin_paths[i++], "/");
@@ -73,7 +32,32 @@ char	*find_executable_path(char *cmd, char **envp)
 			bin_path = NULL;
 		}
 	}
+	return (bin_path);
+}
+
+/**
+ * bin path 문자열 배열을 확인하며 해당 명령어가 수행 가능한지 찾고 경로를 반환 함.
+ */
+char	*find_executable_path(char *cmd, char **envp)
+{
+	char		**bin_paths;
+	char		*bin_path;
+
+	if (ft_strchr(cmd, '/'))
+	{
+		check_file_error(cmd);
+		return (cmd);
+	}
+	bin_paths = get_bin_paths(envp);
+	if (bin_paths == NULL)
+	{
+		check_file_error(cmd);
+		return (cmd);
+	}
+	bin_path = check_find_in_path(cmd, bin_paths);
 	free_arr(bin_paths);
+	if (access(bin_path, F_OK) == 0 && access(bin_path, X_OK) != 0)
+		exit(perror_no_permission(cmd));
 	return (bin_path);
 }
 
@@ -83,17 +67,8 @@ char	*find_executable_path(char *cmd, char **envp)
 int	search_cmd(t_token *token)
 {
 	char		*bin_path;
-	struct stat	path_stat;
 
 	bin_path = find_executable_path(token->cmd, *(token->envp));
-	if (bin_path == NULL)
-		exit(perror_cmd_not_found(token->cmd));
-	if (stat(bin_path, &path_stat) < 0)
-		exit(perror_etc());
-	if ((path_stat.st_mode & S_IFMT) == S_IFDIR)
-		exit(perror_is_dir(bin_path));
-	if (access(bin_path, X_OK) != 0)
-		exit(perror_no_permission(bin_path));
 	execve(bin_path, token->argv, *(token->envp));
 	exit(perror_cmd_not_found(token->cmd));
 }

@@ -39,4 +39,8 @@ int		execute_single(t_token *token);
 int		handle_fd_in(int fd[2], char *last_heredoc);
 void	init_pid_array(t_linkedlist *token_list);
 
+void	free_arr(char **arr);
+char	**get_bin_paths(char **envp);
+void	check_file_error(char *path);
+
 #endif
