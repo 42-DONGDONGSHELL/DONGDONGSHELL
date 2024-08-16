@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/16 18:24:05 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/16 20:59:37 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void	init_env(t_env *env, char **envp, char ***envp_copy)
 	*envp_copy = ft_envpdup(envp);
 }
 
-void	parsing_stage(char *line, t_linkedlist **tk, char ***envp, t_env *env)
+int	parsing_stage(char *line, t_linkedlist **tk, char ***envp, t_env *env)
 {
 	int	parse_result;
 
 	if (ft_strncmp(line, "", 1) == 0)
 	{
 		safe_free((void **) &line);
-		return ;
+		return (1);
 	}
 	add_history(line);
 	parse_result = parse(line, tk, envp, env);
@@ -52,8 +52,9 @@ void	parsing_stage(char *line, t_linkedlist **tk, char ***envp, t_env *env)
 	{
 		print_parse_error(parse_result);
 		env->exit_code = 258;
-		return ;
+		return (1);
 	}
+	return (0);
 }
 
 void	execution_stage(t_linkedlist *token_list, t_env *env, char ***envp_copy)
@@ -85,8 +86,7 @@ int	main(int argc, char **argv, char **envp)
 			env.exit_code = 1;
 		if (!line && sigterm_prompt_handler())
 			break ;
-		parsing_stage(line, &token_list, &envp_copy, &env);
-		if (!token_list || env.exit_code == 258)
+		if (parsing_stage(line, &token_list, &envp_copy, &env))
 			continue ;
 		g_sigint = 0;
 		execution_stage(token_list, &env, &envp_copy);
