@@ -5,6 +5,8 @@ LIBFT = libft.a
 LIBFT_DIR = libft
 HEADER_DIR = include
 READLINE = -lreadline
+LINKING_FLAGS = -lreadline -L/opt/homebrew/opt/readline/lib
+COMFILE_FLAGS = -I/opt/homebrew/opt/readline/include
 
 NAME = minishell
 
@@ -36,6 +38,7 @@ EXECUTE = ./src/execute/execute.c \
 		./src/execute/redirect.c \
 		./src/execute/run_builtin.c \
 		./src/execute/run_cmd.c \
+		./src/execute/ms_wait.c \
 
 SIGNAL = ./src/signal/set_signal.c \
 		./src/signal/signal_handler.c \
@@ -55,6 +58,9 @@ SRCS =	./src/main.c \
 		$(SIGNAL) \
 		$(ERR) \
 
+%.o: %.c
+	$(CC) $(CFLAGS) $(COMFILE_FLAGS) -c $< -o $@
+
 OBJS = ${SRCS:.c=.o}
 
 all : $(NAME)
@@ -62,7 +68,7 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 		make -C $(LIBFT_DIR)
 		cp $(LIBFT_DIR)/$(LIBFT) .
-		$(CC) $(CFLAGS) -I $(HEADER_DIR) $(OBJS) $(LIBFT) -o $(NAME) $(READLINE)
+		$(CC) $(CFLAGS) $(LINKING_FLAGS) -I $(HEADER_DIR) $(OBJS) $(LIBFT) -o $(NAME) $(READLINE)
 
 clean :
 		make clean -C $(LIBFT_DIR)

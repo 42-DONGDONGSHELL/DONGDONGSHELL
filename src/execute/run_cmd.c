@@ -1,5 +1,6 @@
 #include "../../include/ms_execute.h"
 #include "../../include/ms_error.h"
+#include "../../include/ms_signal.h"
 
 /**
  * 환경 변수 PATH를 읽어 bin경로들에 대한 문자열 배열을 반환함.
@@ -91,12 +92,14 @@ void	start_cmd(t_token *token, char *heredoc)
 	int	ret;
 	int	exit_code;
 
-	if (handle_redirection(token, heredoc))
-		exit(1);
+	ft_signal_default();
+	exit_code = handle_redirection(token, heredoc);
+	if (exit_code != 0)
+		exit(exit_code);
 	ret = is_builtin(token);
 	if (ret != -1)
 		exit_code = do_builtin(token, ret);
 	else
-		exit_code = search_cmd(token);
+		search_cmd(token);
 	exit(exit_code);
 }

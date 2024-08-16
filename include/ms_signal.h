@@ -8,6 +8,7 @@ void	set_terminal_print_on(void);
 
 void	sigint_heredoc_handler(int signum);
 void	sigint_prompt_handler(int signum);
+void	sigterm_prompt_handler();
 
 void	ft_signal_heredoc(void);
 void	ft_signal_prompt(void);

@@ -28,6 +28,7 @@ void	ft_signal_prompt(void)
  */
 void	ft_signal_ignore(void)
 {
+	set_terminal_print_off();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -37,6 +38,7 @@ void	ft_signal_ignore(void)
  */
 void	ft_signal_default(void)
 {
+	set_terminal_print_on();
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }

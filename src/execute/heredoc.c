@@ -1,5 +1,7 @@
 #include "../../include/ms_execute.h"
 #include "../../include/ms_signal.h"
+#include "../../include/ms_error.h"
+#include "../../include/ms_wait.h"
 /**
  * 히어독 파일 경로 생성
  */
@@ -45,10 +47,8 @@ char	*delete_quotes_and_check(char *eof, int *need_convert)
 
 /**
  * 히어독 파일 경로를 받아 열고, readline으로 히어독의 입력을 받아 파일에 write.
- * todo : 히어독 읽는 도중 cmd + d 하면 Tmp 파일 저장되고 이후 명령 수행되어야 함.
- * todo : cmd + c 에 대한 처리
  */
-void	readline_heredoc(t_token *token, char *heredoc_file, char *eof)
+void	readline_heredoc(char **envp, char *heredoc_file, char *eof)
 {
 	int		fd;
 	char	*buf;
@@ -57,7 +57,7 @@ void	readline_heredoc(t_token *token, char *heredoc_file, char *eof)
 	t_envp	*envp_dict;
 
 	real_eof = delete_quotes_and_check(eof, &need_convert);
-	envp_dict = create_envp_dict(*(token->envp), 0);
+	envp_dict = create_envp_dict(envp, 0);
 	fd = open(heredoc_file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	buf = readline("> ");
 	while (buf && ft_strncmp(buf, real_eof, ft_strlen(real_eof) + 1) != 0)
@@ -72,6 +72,7 @@ void	readline_heredoc(t_token *token, char *heredoc_file, char *eof)
 	free(real_eof);
 	free_envp_dict(envp_dict);
 	close(fd);
+	exit(0);
 }
 
 /**
@@ -82,19 +83,28 @@ char	*read_heredoc(t_token *token)
 {
 	char	*heredoc_file;
 	t_node	*files;
+	int		pid;
+	int		status;
 
 	files = token->file_list->head;
 	heredoc_file = NULL;
-	while (files)
-	{
-		if (files->type == 5)
-		{
-			ft_signal_heredoc();
+	while (files) {
+		if (files->type == 5) {
 			if (heredoc_file)
 				free(heredoc_file);
 			heredoc_file = create_heredoc_filepath(token);
-			readline_heredoc(token, heredoc_file, files->next->content);
-			ft_signal_prompt();
+			pid = fork();
+			if (pid < 0)
+				perror_cmd("fork");
+			if (pid == 0) {
+				ft_signal_heredoc();
+				readline_heredoc(*(token->envp), heredoc_file, files->next->content);
+				free_token_list(token->list_info);
+			} else {
+				ft_signal_ignore();
+				waitpid(pid, &status, 0);
+				status_to_exit_code(status); // todo : 전역 변수로 받기. (^C인 경우에만 1 return, 나머지 0 return)
+			}
 		}
 		files = files->next;
 	}

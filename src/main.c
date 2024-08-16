@@ -12,8 +12,16 @@
 
 #include "../include/minishell.h"
 #include "../include/ms_execute.h"
+#include "../include/ms_signal.h"
 
 int	g_exit_code = 0;
+
+void	sigterm_prompt_handler(void)
+{
+	ft_putstr_fd("\033[1A", STDERR_FILENO);
+	ft_putstr_fd("\033[12C", STDERR_FILENO);
+	ft_putstr_fd("exit\n", STDERR_FILENO);
+}
 
 char	*set_home(char **envp)
 {
@@ -33,6 +41,7 @@ void	init_env(t_env *env, char **envp)
 	env->envp_dict = NULL;
 }
 
+#include "../include/ms_wait.h"
 int	main(int argc, char **argv, char **envp)
 {
 	t_linkedlist	*token_list;
@@ -45,12 +54,16 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	init_env(&env, envp);
 	envp_copy = ft_envpdup(envp);
+	ft_signal_prompt();
 	while (1)
 	{
 		token_list = NULL;
 		line = readline("minishell$ ");
 		if (!line)
+		{
+			sigterm_prompt_handler();
 			break ;
+		}
 		if (ft_strncmp(line, "", 1) == 0)
 		{
 			safe_free((void **) &line);
