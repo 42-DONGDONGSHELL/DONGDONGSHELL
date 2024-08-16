@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_cmd.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/16 16:18:05 by dongclee          #+#    #+#             */
+/*   Updated: 2024/08/16 17:19:50 by dongclee         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/ms_execute.h"
 #include "../../include/ms_error.h"
 #include "../../include/ms_signal.h"
@@ -5,23 +17,25 @@
 /**
  * 환경 변수 PATH를 읽어 bin경로들에 대한 문자열 배열을 반환함.
  */
-char **get_bin_paths(char **envp)
+char	**get_bin_paths(char **envp)
 {
-	char *path = key_to_value_loc("PATH", envp);
+	char	*path;
+
+	path = key_to_value_loc("PATH", envp);
 	if (path == NULL)
-		return NULL;
-	return ft_split(path, ':');
+		return (NULL);
+	return (ft_split(path, ':'));
 }
 
 /**
  * 배열을 동적할당 free
  */
-void free_arr(char **arr)
+void	free_arr(char **arr)
 {
-	int i;
+	int	i;
 
 	if (arr == NULL)
-		return;
+		return ;
 	i = 0;
 	while (arr[i])
 	{
@@ -34,7 +48,7 @@ void free_arr(char **arr)
 /**
  * bin path 문자열 배열을 확인하며 해당 명령어가 수행 가능한지 찾고 경로를 반환 함.
  */
-char *find_executable_path(char *cmd, char **envp)
+char	*find_executable_path(char *cmd, char **envp)
 {
 	char	**bin_paths;
 	char	*bin_path;
@@ -42,14 +56,15 @@ char *find_executable_path(char *cmd, char **envp)
 	int		i;
 
 	bin_path = NULL;
-	if ((bin_paths = get_bin_paths(envp)) == NULL)
+	bin_paths = get_bin_paths(envp);
+	if (bin_paths == NULL)
 		return (NULL);
 	if (access(cmd, F_OK) == 0)
 		bin_path = ft_strdup(cmd);
 	i = 0;
 	while (bin_path == NULL && bin_paths[i])
 	{
-		tmp_path = ft_strjoin(bin_paths[i], "/");
+		tmp_path = ft_strjoin(bin_paths[i++], "/");
 		bin_path = ft_strjoin(tmp_path, cmd);
 		free(tmp_path);
 		if (access(bin_path, F_OK) != 0)
@@ -57,7 +72,6 @@ char *find_executable_path(char *cmd, char **envp)
 			free(bin_path);
 			bin_path = NULL;
 		}
-		i++;
 	}
 	free_arr(bin_paths);
 	return (bin_path);

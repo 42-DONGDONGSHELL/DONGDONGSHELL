@@ -39,6 +39,7 @@ EXECUTE = ./src/execute/execute.c \
 		./src/execute/run_builtin.c \
 		./src/execute/run_cmd.c \
 		./src/execute/ms_wait.c \
+		./src/execute/execute_util.c \
 
 SIGNAL = ./src/signal/set_signal.c \
 		./src/signal/signal_handler.c \
@@ -46,6 +47,7 @@ SIGNAL = ./src/signal/set_signal.c \
 
 ERR = ./src/error/error.c \
 		./src/error/error_detail.c \
+		./src/error/error_detail2.c \
 
 SRCS =	./src/main.c \
 		./src/utils.c \

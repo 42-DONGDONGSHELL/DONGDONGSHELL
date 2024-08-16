@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 16:37:59 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/16 14:53:32 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/16 17:04:28 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,6 @@ int	wait_child(t_linkedlist *list)
 	return (status_to_exit_code(status));
 }
 
-void init_pid_array(t_linkedlist *token_list)
-{
-	if (token_list->pid != NULL)
-	{
-		free(token_list->pid);
-		token_list->pid = NULL;
-	}
-	token_list->pid = (pid_t *)malloc(sizeof(int) * token_list->token_cnt);
-	if (token_list->pid == NULL)
-		perror_cmd("malloc");
-	memset(token_list->pid, 0, sizeof(int) * token_list->token_cnt);
-}
-
 /**
  * 파이프가 있을 때 사용.
  * @param list
@@ -90,8 +77,8 @@ void init_pid_array(t_linkedlist *token_list)
  */
 int	execute(t_linkedlist *list)
 {
-	int	fd[2];
-	int	fd_in;
+	int		fd[2];
+	int		fd_in;
 	char	*last_heredoc;
 	t_token	*token;
 	t_node	*node;
@@ -109,13 +96,7 @@ int	execute(t_linkedlist *list)
 		close(fd[1]);
 		if (fd_in != STDIN_FILENO)
 			close(fd_in);
-		if (last_heredoc == NULL) // 만약 히어독이 없다면 fd[0] (파이프 읽기)를 fd_in으로
-			fd_in = fd[0];
-		else // 만약 히어독이 있다면 fd[0] (파이프 읽기)를 닫고, 히어독 파일을 fd_in으로
-		{
-			close(fd[0]);
-			fd_in = open(last_heredoc, O_RDONLY);
-		}
+		fd_in = handle_fd_in(fd, last_heredoc);
 		node = node->next;
 	}
 	return (wait_child(list));
@@ -127,11 +108,11 @@ int	execute(t_linkedlist *list)
  */
 int	execute_single(t_token *token)
 {
-	int	pid;
-	int	status;
-	int	tp;
-	int	exit_code;
-	char *last_heredoc;
+	int		pid;
+	int		status;
+	int		tp;
+	int		exit_code;
+	char	*last_heredoc;
 
 	tp = is_builtin(token);
 	if (tp == 2 || tp == 5 || tp == 7 || (tp == 4 && token->argv[1] != NULL))

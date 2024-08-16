@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 16:16:03 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/14 16:04:04 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/16 16:25:57 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ char	**split_envp(char *str)
 	delimiter = ft_strchr(str, '=');
 	if (delimiter == NULL)
 	{
-		// 기존 코드 segmentaion fault 발생 문제로 인해 export a와 같이 "=" 없이 환경변수 등록 시 key는 파라미터로 들어온 str 전체, value는 NULL로 수정
 		s2[0] = safe_malloc((ft_strlen(str) + 1) * sizeof(char));
 		ft_strlcpy(s2[0], str, ft_strlen(str) + 1);
 		s2[1] = NULL;

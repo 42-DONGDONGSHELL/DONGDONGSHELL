@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:48 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/13 18:46:19 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/16 16:53:18 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,22 @@ int	is_declared(char *str)
 	return (0);
 }
 
-char *key_to_value_loc(char *key, char **envv)
+void	print_all_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		ft_putendl_fd(env[i], 1);
+		i++;
+	}
+}
+
+char	*key_to_value_loc(char *key, char **envv)
 {
 	size_t	key_len;
-	int i;
+	int		i;
 
 	key_len = ft_strlen(key);
 	i = 0;
@@ -39,12 +51,12 @@ char *key_to_value_loc(char *key, char **envv)
 			return (envv[i] + key_len + 1);
 		i++;
 	}
-	return NULL;
+	return (NULL);
 }
 
 int	ft_env(char **envv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (envv[i])

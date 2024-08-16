@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:58 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/13 21:44:13 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/16 15:54:32 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ void	migrate_except_deleted(char ***rtn, char **envp, char *del)
 	i = 0;
 	j = 0;
 	del_len = ft_strlen(del);
-	while (envp[i] != NULL) {
-		if (ft_strncmp(envp[i], del, del_len) == 0 && envp[i][del_len] == '=') {
+	while (envp[i] != NULL)
+	{
+		if (ft_strncmp(envp[i], del, del_len) == 0 && envp[i][del_len] == '=')
+		{
 			i++;
-			continue;
+			continue ;
 		}
 		(*rtn)[j] = ft_safe_strdup(envp[i]);
 		i++;
@@ -52,8 +54,8 @@ char	**create_new_envv(char **envp, char *del)
 {
 	char	**new;
 	size_t	i;
-	int	del_len;
-	int	need_delete;
+	int		del_len;
+	int		need_delete;
 
 	del_len = ft_strlen(del);
 	i = 0;
@@ -71,13 +73,15 @@ char	**create_new_envv(char **envp, char *del)
 	return (new);
 }
 
-void free_envv(char ***envp) {
+void	free_envv(char ***envp)
+{
 	size_t	i;
 
 	i = 0;
 	if ((*envp)[i] == NULL)
 		return ;
-	while ((*envp)[i]) {
+	while ((*envp)[i])
+	{
 		free((*envp)[i]);
 		i++;
 	}

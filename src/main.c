@@ -14,6 +14,8 @@
 #include "../include/ms_execute.h"
 #include "../include/ms_signal.h"
 
+int	g_sigint = 0;
+
 void	sigterm_prompt_handler(void)
 {
 	ft_putstr_fd("\033[1A", STDERR_FILENO);
