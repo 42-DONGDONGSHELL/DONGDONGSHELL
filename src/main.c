@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/17 12:00:40 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/17 15:16:49 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,17 @@ void	init_env(t_env *env, char **envp, char ***envp_copy)
 int	parsing_stage(char *line, t_linkedlist **tk, char ***envp, t_env *env)
 {
 	int	parse_result;
+	char *trimmed_line;
 
 	if (ft_strncmp(line, "", 1) == 0)
 	{
 		safe_free((void **) &line);
 		return (1);
 	}
-	add_history(line);
+	trimmed_line = trim_whitespace(line);
+	if (ft_strncmp(trimmed_line, "", 1) != 0)
+		add_history(line);
+	safe_free((void **)&trimmed_line);
 	parse_result = parse(line, tk, envp, env);
 	safe_free((void **) &line);
 	if (parse_result)
