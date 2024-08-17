@@ -12,9 +12,6 @@
 
 #include "../../include/ms_execute.h"
 
-/**
- * 빌드인 함수인지 확인 후 맞는 인덱스 반환
- */
 int	is_builtin(t_token *token)
 {
 	int	len;
@@ -40,9 +37,6 @@ int	is_builtin(t_token *token)
 		return (-1);
 }
 
-/**
- * 빌트인 함수 실행
- */
 int	do_builtin(t_token *token, int builtin_idx)
 {
 	int	ret;

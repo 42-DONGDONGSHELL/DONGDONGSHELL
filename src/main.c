@@ -38,8 +38,8 @@ void	init_env(t_env *env, char **envp, char ***envp_copy)
 
 int	parsing_stage(char *line, t_linkedlist **tk, char ***envp, t_env *env)
 {
-	int	parse_result;
-	char *trimmed_line;
+	int		parse_result;
+	char	*trimmed_line;
 
 	if (ft_strncmp(line, "", 1) == 0)
 	{

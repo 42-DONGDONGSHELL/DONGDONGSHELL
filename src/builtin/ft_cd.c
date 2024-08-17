@@ -13,35 +13,6 @@
 #include "../../include/ms_builtin.h"
 #include "../../include/ms_error.h"
 
-//int	ft_cd(char *path, char ***envv)
-//{
-//	char	*buf_pwd;
-//	char	*buf;
-//	char	*pwd;
-//	char	*old_pwd;
-//
-//	buf_pwd = key_to_value_loc("PWD", *envv);
-//	if (chdir(path) != 0)
-//	{
-//		// print
-//		return (ERROR);
-//	}
-//	old_pwd = ft_strjoin("OLDPWD=", buf_pwd);
-//	buf = safe_malloc(sizeof(char) * 1000);
-//	if (!getcwd(buf, 1000))
-//	{
-//		// print err
-//		return (ERROR);
-//	}
-//	pwd = ft_strjoin("PWD=", buf);
-//	ft_export(old_pwd, envv);
-//	ft_export(pwd, envv);
-//	free(buf);
-//	free(pwd);
-//	free(old_pwd);
-//	return (SUCCESS);
-//}
-
 int	ft_cd(char *path, char ***envv)
 {
 	char	*buf_pwd;
@@ -69,11 +40,6 @@ int	ft_cd(char *path, char ***envv)
 	return (SUCCESS);
 }
 
-/**
- * cd, cd ~ : HOME
- * @param token
- * @return
- */
 int	execute_cd(t_token *token)
 {
 	char	*path;

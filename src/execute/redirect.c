@@ -28,10 +28,6 @@ int	check_file(char *path)
 	return (perror_etc());
 }
 
-/**
- * "<" 나 "<<" 와 같이 input redirection일 경우 사용.
- * "<<" 인 경우 미리 생성된 heredoc경로를 집어넣을 것.
- */
 int	redirect_readfile(char *path)
 {
 	int	fd;
@@ -50,11 +46,6 @@ int	redirect_readfile(char *path)
 	return (SUCCESS);
 }
 
-/**
- * ">" 나 ">>"와 같이 output redirection일 경우 사용
- * ">" 일 경우 reset이 필요하므로 1을 need_reset에 집어넣음
- * ">>" 일 경우 뒤에 이어붙이기 가능하므로 0를 need_reset에 집어넣음.
- */
 int	redirect_writefile(char *path, int need_reset)
 {
 	int	fd;
@@ -76,9 +67,6 @@ int	redirect_writefile(char *path, int need_reset)
 	return (SUCCESS);
 }
 
-/**
- * t_node 배열을 순회하며 리다이랙션 처리.
- */
 int	handle_redirection(t_token *token, char *heredoc)
 {
 	t_node	*file;

@@ -12,7 +12,6 @@
 
 #include "../../include/data_struct.h"
 
-// free 필요
 char	*linkedlist_to_str(t_linkedlist *linkedlist)
 {
 	char	*str;

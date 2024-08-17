@@ -11,12 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../include/ms_execute.h"
-#include "../../include/ms_signal.h"
 #include "../../include/ms_error.h"
 #include "../../include/ms_wait.h"
-/**
- * 히어독 파일 경로 생성
- */
+
 char	*create_heredoc_filepath(t_token *token)
 {
 	static int	i = 0;
@@ -36,10 +33,6 @@ char	*create_heredoc_filepath(t_token *token)
 	return (file_path);
 }
 
-/**
- * EOF가 "나 '로 감싸여 있는지 확인 후 need_convert에 정보 저장, 만약 감싸여 있다면 벗기기.
- * return 순수한 EOF 반환.
- */
 char	*delete_quotes_and_check(char *eof, int *need_convert)
 {
 	int	i;
@@ -58,9 +51,6 @@ char	*delete_quotes_and_check(char *eof, int *need_convert)
 	return (strip_quotes(eof));
 }
 
-/**
- * 히어독 파일 경로를 받아 열고, readline으로 히어독의 입력을 받아 파일에 write.
- */
 void	readline_heredoc(char **envp, char *heredoc_file, char *eof)
 {
 	int		fd;
@@ -113,10 +103,6 @@ char	*process_heredoc_file(t_token *token, t_node *files)
 	return (h_file);
 }
 
-/**
- * 히어독 파일 읽기.
- * return : 히어독 있었다면 마지막 히어독 경로, 히어독 없다면 NULL.
- */
 char	*read_heredoc(t_token *token)
 {
 	char	*h_file;

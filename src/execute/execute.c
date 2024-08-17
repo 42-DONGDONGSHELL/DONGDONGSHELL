@@ -15,9 +15,6 @@
 #include "../../include/ms_error.h"
 #include "../../include/ms_wait.h"
 
-/**
- * 자식 프로세스가 실행하는 함수
- */
 void	child(t_token *token, int fd[2], int fd_in, char *heredoc)
 {
 	if ((t_token *) token->list_info->head->content != token)
@@ -35,9 +32,6 @@ void	child(t_token *token, int fd[2], int fd_in, char *heredoc)
 	start_cmd(token, heredoc);
 }
 
-/**
- * 자식 프로세스 생성
- */
 void	make_child(t_token *token, int fd[2], int fd_in, char *heredoc)
 {
 	static int	i;
@@ -70,11 +64,6 @@ int	wait_child(t_linkedlist *list)
 	return (status_to_exit_code(status));
 }
 
-/**
- * 파이프가 있을 때 사용.
- * @param list
- * @return
- */
 int	execute(t_linkedlist *list)
 {
 	int		fd[2];
@@ -103,10 +92,6 @@ int	execute(t_linkedlist *list)
 	return (wait_child(list));
 }
 
-/**
- * 파이프가 없을 때 사용. ls | -> segmentfault 안니게
- * @param list
- */
 int	execute_single(t_token *token)
 {
 	int		pid;

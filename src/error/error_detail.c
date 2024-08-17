@@ -12,13 +12,6 @@
 
 #include "../../include/ms_error.h"
 
-/**
- * export 시 ?=value와 같이 key가 이상한 경우.
- * unset 시 key가 이상한 경우.
- * @param cmd
- * @param arg
- * @return
- */
 int	perror_identifier(char *cmd, char *arg)
 {
 	return (perror_cmd_arg_msg(cmd, arg, "not a valid identifier", 1));

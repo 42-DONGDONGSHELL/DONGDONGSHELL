@@ -35,9 +35,6 @@ char	*check_find_in_path(char *cmd, char **bin_paths)
 	return (bin_path);
 }
 
-/**
- * bin path 문자열 배열을 확인하며 해당 명령어가 수행 가능한지 찾고 경로를 반환 함.
- */
 char	*find_executable_path(char *cmd, char **envp)
 {
 	char		**bin_paths;
@@ -61,9 +58,6 @@ char	*find_executable_path(char *cmd, char **envp)
 	return (bin_path);
 }
 
-/**
- * 명령어의 실행 경로를 찾고 명령어 실행.
- */
 int	search_cmd(t_token *token)
 {
 	char		*bin_path;
@@ -75,9 +69,6 @@ int	search_cmd(t_token *token)
 	exit(perror_cmd_not_found(token->cmd));
 }
 
-/**
- * 빌트인 함수인지 확인 후 아니라면 실행 경로에 있는 함수인지 확인
- */
 void	start_cmd(t_token *token, char *heredoc)
 {
 	int	ret;

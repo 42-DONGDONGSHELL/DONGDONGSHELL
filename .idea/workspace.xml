@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d4ae020f-0d44-4224-86aa-8a12d0c028d7" name="변경" comment="Fix: cd 수정">
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/minishell.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/minishell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/builtin/ft_cd.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/builtin/ft_cd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data_struct/data_struct_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/data_struct/data_struct_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/error/error_detail.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/error/error_detail.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execute/execute.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/execute/execute.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execute/heredoc.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/execute/heredoc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execute/redirect.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/execute/redirect.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execute/run_builtin.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/execute/run_builtin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execute/run_cmd.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/execute/run_cmd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/execute/run_cmd_util.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/execute/run_cmd_util.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/print_token.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/signal/set_signal.c" beforeDir="false" afterPath="$PROJECT_DIR$/src/signal/set_signal.c" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="DONGDONGSHELL2" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="DONGDONGSHELL2" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2024" />
+    <option name="minorVersion" value="1.4" />
+    <option name="productBranch" value="Classic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2kbZEB0msPiIz6X03hhqGHpVJ1c" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/idongchan/Desktop/42/fuck/DONGDONGSHELL2/include&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.appearance&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/include" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="d4ae020f-0d44-4224-86aa-8a12d0c028d7" name="변경" comment="" />
+      <created>1723554122273</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723554122273</updated>
+      <workItem from="1723554123360" duration="120000" />
+      <workItem from="1723600679376" duration="27316000" />
+      <workItem from="1723712838083" duration="29297000" />
+      <workItem from="1723819786286" duration="8330000" />
+      <workItem from="1723866599702" duration="7376000" />
+    </task>
+    <task id="LOCAL-00001" summary="fix: 빌트인 함수 수정&#10;export, pwd, unset, exit 작동 확인 완료. 엣지케이스 검토 필요.">
+      <option name="closed" value="true" />
+      <created>1723554224789</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1723554224789</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: heredoc, redirect 기능 수정">
+      <option name="closed" value="true" />
+      <created>1723632887624</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1723632887624</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix: export 빌트인 함수 수정&#10;여러 환경 변수 export 시 중간에 에러 발생하면 끊기는 문제 해결.&#10;export 인자 없이 호출 시 선언되지 않은 환경 변수도 출력되어야 하는 문제 해결.">
+      <option name="closed" value="true" />
+      <created>1723718878340</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723718878340</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix: signal 처리 보완 및 exit_code 보완">
+      <option name="closed" value="true" />
+      <created>1723790576413</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1723790576413</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Refactor: norminette 규정 준수.">
+      <option name="closed" value="true" />
+      <created>1723797593735</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1723797593735</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Hotfix: pid 관리 문제 해결.&#10;list-&gt;pid[] 에 pid가 순서대로 담기지 않는 문제 발생. 조건문 수정.">
+      <option name="closed" value="true" />
+      <created>1723799277631</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1723799277631</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fix: 실행 경로 찾기 로직 수정.&#10;CMD에 '/'있는 경우 바로 CMD를 이용한 명령어 검색 실시&#10;CMD에 '/'없는 경우 $PATH가 NULL인지 확인 만약 NULL이라면 현재 경로에서 탐색. 환경변수가 존재한다면 PATH모두 확인.">
+      <option name="closed" value="true" />
+      <created>1723852458996</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1723852458996</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fix: 실행 경로 찾기 로직 수정.&#10;CMD에 '/'있는 경우 바로 CMD를 이용한 명령어 검색 실시&#10;CMD에 '/'없는 경우 $PATH가 NULL인지 확인 만약 NULL이라면 현재 경로에서 탐색. 환경변수가 존재한다면 PATH모두 확인.">
+      <option name="closed" value="true" />
+      <created>1723852523978</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1723852523978</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Fix: cd 수정">
+      <option name="closed" value="true" />
+      <created>1723876418782</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1723876418782</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix: 빌트인 함수 수정&#10;export, pwd, unset, exit 작동 확인 완료. 엣지케이스 검토 필요." />
+    <MESSAGE value="feat: heredoc, redirect 기능 수정" />
+    <MESSAGE value="fix: export 빌트인 함수 수정&#10;여러 환경 변수 export 시 중간에 에러 발생하면 끊기는 문제 해결.&#10;export 인자 없이 호출 시 선언되지 않은 환경 변수도 출력되어야 하는 문제 해결." />
+    <MESSAGE value="fix: signal 처리 보완 및 exit_code 보완" />
+    <MESSAGE value="Refactor: norminette 규정 준수." />
+    <MESSAGE value="Hotfix: pid 관리 문제 해결.&#10;list-&gt;pid[] 에 pid가 순서대로 담기지 않는 문제 발생. 조건문 수정." />
+    <MESSAGE value="Fix: 실행 경로 찾기 로직 수정.&#10;CMD에 '/'있는 경우 바로 CMD를 이용한 명령어 검색 실시&#10;CMD에 '/'없는 경우 $PATH가 NULL인지 확인 만약 NULL이라면 현재 경로에서 탐색. 환경변수가 존재한다면 PATH모두 확인." />
+    <MESSAGE value="Fix: cd 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: cd 수정" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

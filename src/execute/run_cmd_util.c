@@ -13,9 +13,6 @@
 #include "../../include/ms_execute.h"
 #include "../../include/ms_error.h"
 
-/**
- * 환경 변수 PATH를 읽어 bin경로들에 대한 문자열 배열을 반환함.
- */
 char	**get_bin_paths(char **envp)
 {
 	char	*path;
@@ -26,9 +23,6 @@ char	**get_bin_paths(char **envp)
 	return (ft_split(path, ':'));
 }
 
-/**
- * 배열을 동적할당 free
- */
 void	free_arr(char **arr)
 {
 	int	i;
