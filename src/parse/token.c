@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/17 12:17:29 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/17 13:58:28 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	push_file(t_node **start, t_linkedlist *f_list, t_linkedlist *a_list)
 		i++;
 	file = safe_malloc(sizeof(char) * i + 1);
 	ft_strlcpy(file, ncontent, i + 1);
-	f_list->tail->type = (*start)->next->type;
 	push(f_list, file);
+	f_list->tail->type = (*start)->next->type;
 	if (ncontent[i] == ' ' && !is_in_quotes(ncontent, &ncontent[i]))
 		push_argv(a_list, &ncontent[++i]);
 	*start = (*start)->next;
