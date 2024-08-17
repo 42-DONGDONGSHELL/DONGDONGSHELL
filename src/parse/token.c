@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 19:40:04 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/17 12:17:29 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	push_argv(t_linkedlist *argv_list, char *str)
 	{
 		if (is_whitespace(str[i]) && !is_in_quotes(str, &str[i]))
 		{
-			push(argv_list, ft_safe_substr(str, start, i - start));
+			if (i - start > 1)
+				push(argv_list, ft_safe_substr(str, start, i - start));
 			start = i + 1;
 		}
 		i++;
@@ -50,12 +51,25 @@ void	push_argv(t_linkedlist *argv_list, char *str)
 	push(argv_list, ft_safe_substr(str, start, i - start));
 }
 
-void	push_file(t_node **start, t_linkedlist *file_list)
+void	push_file(t_node **start, t_linkedlist *f_list, t_linkedlist *a_list)
 {
-	push(file_list, ft_safe_strdup((*start)->content));
-	file_list->tail->type = (*start)->type;
-	push(file_list, ft_safe_strdup((*start)->next->content));
-	file_list->tail->type = (*start)->next->type;
+	int		i;
+	char	*file;
+	char	*ncontent;
+
+	i = 0;
+	push(f_list, ft_safe_strdup((*start)->content));
+	f_list->tail->type = (*start)->type;
+	ncontent = (*start)->next->content;
+	while (ncontent[i] != '\0'
+		&& !(ncontent[i] == ' ' && !is_in_quotes(ncontent, &ncontent[i])))
+		i++;
+	file = safe_malloc(sizeof(char) * i + 1);
+	ft_strlcpy(file, ncontent, i + 1);
+	f_list->tail->type = (*start)->next->type;
+	push(f_list, file);
+	if (ncontent[i] == ' ' && !is_in_quotes(ncontent, &ncontent[i]))
+		push_argv(a_list, &ncontent[++i]);
 	*start = (*start)->next;
 }
 
@@ -71,7 +85,7 @@ void	mk_token(t_node **start, t_node *now, t_linkedlist *list, char ***envp)
 	while (*start != now)
 	{
 		if ((*start)->type != ETC)
-			push_file(start, file_list);
+			push_file(start, file_list, argv_list);
 		else if ((*start)->type == ETC)
 			push_argv(argv_list, (*start)->content);
 		*start = (*start)->next;

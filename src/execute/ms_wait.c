@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_wait.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 16:17:51 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/16 16:17:58 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/17 10:42:40 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/ms_wait.h"
 
 int	ms_w_int(int w)
 {
@@ -38,5 +40,9 @@ int	status_to_exit_code(int status)
 		exit_code = ms_wexitstatus(status);
 	else
 		exit_code = ms_wstatus(status) + 128;
+	if (exit_code == 130)
+		printf("\n");
+	else if (exit_code == 131)
+		printf("Quit: 3\n");
 	return (exit_code);
 }

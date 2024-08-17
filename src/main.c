@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/16 20:59:37 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/17 12:00:40 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		token_list = NULL;
-		line = readline("minishell$ ");
+		line = readline("ddshell$ ");
 		if (g_sigint)
 			env.exit_code = 1;
 		if (!line && sigterm_prompt_handler())
