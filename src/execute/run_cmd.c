@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 16:18:05 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/16 17:19:50 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/17 11:28:18 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	search_cmd(t_token *token)
 {
 	char		*bin_path;
 
+	if (token->cmd == NULL)
+		exit(SUCCESS);
 	bin_path = find_executable_path(token->cmd, *(token->envp));
 	execve(bin_path, token->argv, *(token->envp));
 	exit(perror_cmd_not_found(token->cmd));

@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 08:04:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/14 15:35:51 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/17 11:22:06 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,33 @@ t_linkedlist	*substitute_env(t_linkedlist *trimmed_list, t_env *env)
 	return (envsubst_list);
 }
 
+void	remove_empty_node(t_linkedlist *list)
+{
+	t_node	*current;
+	t_node	*next;
+
+	current = list->head;
+	while (current)
+	{
+		next = current->next;
+		if (current->content && !ft_strncmp((char *)current->content, "\0", 1))
+		{
+			if (current == list->head)
+				list->head = current->next;
+			if (current == list->tail)
+				list->tail = current->prev;
+			if (current->prev)
+				current->prev->next = current->next;
+			if (current->next)
+				current->next->prev = current->prev;
+			safe_free((void **) &current->content);
+			safe_free((void **) &current);
+			list->size--;
+		}
+		current = next;
+	}
+}
+
 int	parse(char *line, t_linkedlist **tk_list, char ***envp, t_env *env)
 {
 	t_linkedlist	*trimmed_list;
@@ -65,6 +92,7 @@ int	parse(char *line, t_linkedlist **tk_list, char ***envp, t_env *env)
 		return (operator_check);
 	env->envp_dict = create_envp_dict(*envp, env->exit_code);
 	envsubst_list = substitute_env(trimmed_list, env);
+	remove_empty_node(envsubst_list);
 	*tk_list = create_token_list(envsubst_list, envp);
 	replace_quotes(*tk_list);
 	now = envsubst_list->head;

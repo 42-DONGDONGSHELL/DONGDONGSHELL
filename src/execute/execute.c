@@ -6,7 +6,7 @@
 /*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 16:37:59 by dongclee          #+#    #+#             */
-/*   Updated: 2024/08/16 18:22:32 by drhee            ###   ########.fr       */
+/*   Updated: 2024/08/17 10:44:20 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	execute(t_linkedlist *list)
 		if (fd_in != STDIN_FILENO)
 			close(fd_in);
 		fd_in = handle_fd_in(fd, last_heredoc);
+		safe_free((void **) &last_heredoc);
 		node = node->next;
 	}
 	return (wait_child(list));
@@ -129,8 +130,7 @@ int	execute_single(t_token *token)
 	ft_signal_ignore();
 	waitpid(pid, &status, 0);
 	exit_code = status_to_exit_code(status);
-	if (last_heredoc != NULL)
-		free(last_heredoc);
+	safe_free((void **) &last_heredoc);
 	ft_signal_prompt();
 	return (exit_code);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drhee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 20:14:30 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 19:40:04 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/08/17 10:44:04 by drhee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,23 @@ void	push_argv(t_linkedlist *argv_list, char *str)
 	push(argv_list, ft_safe_substr(str, start, i - start));
 }
 
-void	push_file(t_node **start, t_linkedlist *file_list)
+void	push_file(t_node **start, t_linkedlist *f_list, t_linkedlist *a_list)
 {
-	push(file_list, ft_safe_strdup((*start)->content));
-	file_list->tail->type = (*start)->type;
-	push(file_list, ft_safe_strdup((*start)->next->content));
-	file_list->tail->type = (*start)->next->type;
+	int		i;
+	char	*file;
+
+	i = 0;
+	push(f_list, ft_safe_strdup((*start)->content));
+	f_list->tail->type = (*start)->type;
+	while (((char *)(*start)->next->content)[i] != '\0'
+		&& ((char *)(*start)->next->content)[i] != ' ')
+		i++;
+	file = safe_malloc(sizeof(char) * i + 1);
+	ft_strlcpy(file, (*start)->next->content, i + 1);
+	push(f_list, file);
+	if (((char *)(*start)->next->content)[i++] == ' ')
+		push_argv(a_list, &((char *)(*start)->next->content)[i]);
+	f_list->tail->type = (*start)->next->type;
 	*start = (*start)->next;
 }
 
@@ -71,7 +82,7 @@ void	mk_token(t_node **start, t_node *now, t_linkedlist *list, char ***envp)
 	while (*start != now)
 	{
 		if ((*start)->type != ETC)
-			push_file(start, file_list);
+			push_file(start, file_list, argv_list);
 		else if ((*start)->type == ETC)
 			push_argv(argv_list, (*start)->content);
 		*start = (*start)->next;
