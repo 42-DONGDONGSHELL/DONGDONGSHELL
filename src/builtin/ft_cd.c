@@ -13,25 +13,53 @@
 #include "../../include/ms_builtin.h"
 #include "../../include/ms_error.h"
 
+//int	ft_cd(char *path, char ***envv)
+//{
+//	char	*buf_pwd;
+//	char	*buf;
+//	char	*pwd;
+//	char	*old_pwd;
+//
+//	buf_pwd = key_to_value_loc("PWD", *envv);
+//	if (chdir(path) != 0)
+//	{
+//		// print
+//		return (ERROR);
+//	}
+//	old_pwd = ft_strjoin("OLDPWD=", buf_pwd);
+//	buf = safe_malloc(sizeof(char) * 1000);
+//	if (!getcwd(buf, 1000))
+//	{
+//		// print err
+//		return (ERROR);
+//	}
+//	pwd = ft_strjoin("PWD=", buf);
+//	ft_export(old_pwd, envv);
+//	ft_export(pwd, envv);
+//	free(buf);
+//	free(pwd);
+//	free(old_pwd);
+//	return (SUCCESS);
+//}
+
 int	ft_cd(char *path, char ***envv)
 {
-	int		ret;
+	char	*buf_pwd;
 	char	*buf;
 	char	*pwd;
 	char	*old_pwd;
 
+	buf_pwd = key_to_value_loc("PWD", *envv);
+	if (chdir(path) != 0)
+		return (perror_cmd("chdir"));
+	old_pwd = ft_strjoin("OLDPWD=", buf_pwd);
 	buf = safe_malloc(sizeof(char) * 1000);
 	if (!getcwd(buf, 1000))
-		return (ERROR);
-	ret = chdir(path);
-	if (ret != 0)
 	{
-		free(buf);
-		return (ERROR);
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: ", 1);
+		ft_putstr_fd("cannot access parent directories: ", 1);
+		ft_putendl_fd("No such file or directory", 1);
 	}
-	old_pwd = ft_strjoin("OLDPWD=", buf);
-	if (!getcwd(buf, 1000))
-		return (ERROR);
 	pwd = ft_strjoin("PWD=", buf);
 	ft_export(old_pwd, envv);
 	ft_export(pwd, envv);
