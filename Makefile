@@ -40,6 +40,7 @@ EXECUTE = ./src/execute/execute.c \
 		./src/execute/run_cmd.c \
 		./src/execute/ms_wait.c \
 		./src/execute/execute_util.c \
+		./src/execute/run_cmd_util.c \
 
 SIGNAL = ./src/signal/set_signal.c \
 		./src/signal/signal_handler.c \
