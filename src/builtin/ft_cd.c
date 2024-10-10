@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 16:13:41 by dongclee          #+#    #+#             */
-/*   Updated: 2024/10/10 18:54:44 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/10/10 18:56:08 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	ft_cd(char *path, char ***envv)
 {
-	int	ret;
+	char	*buf_pwd;
 	char	*buf;
 	char	*pwd;
 	char	*old_pwd;
