@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/22 14:53:44 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/13 19:28:10 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:03:39 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,5 @@ t_linkedlist	*create_token_list(t_linkedlist *envsubst_list, char ***envp);
 // trim.c
 char			*trim_whitespace(const char *str);
 t_linkedlist	*trim_list(t_linkedlist *parsed_list);
-
-void			print_token(t_linkedlist *token_list);
 
 #endif

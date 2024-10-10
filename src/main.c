@@ -6,7 +6,7 @@
 /*   By: dongclee <dongclee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 18:56:04 by drhee             #+#    #+#             */
-/*   Updated: 2024/08/14 10:46:09 by dongclee         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:04:40 by dongclee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		token_list = NULL;
-		line = readline("minishell$ ");
+		line = readline("ddshell$ ");
 		if (!line)
 			break ;
 		if (ft_strncmp(line, "", 1) == 0)
@@ -59,12 +59,8 @@ int	main(int argc, char **argv, char **envp)
 		if (token_list->token_cnt == 1)
 			execute_single((t_token *) token_list->head->content);
 		else
-		{
-			printf("main :: before execute\n");
 			execute(token_list);
-		}
 		envp_copy = *((t_token *) token_list->head->content)->envp;
-		print_token(token_list);
 		free_token_list(token_list);
 	}
 	free_envp(envp_copy);

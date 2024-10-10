@@ -21,7 +21,6 @@ PARSE =	./src/parse/parse.c \
 		./src/parse/free_token.c \
 		./src/parse/strip_quotes.c \
 		./src/parse/trim.c \
-		./src/print_token.c \
 
 BUILTIN = ./src/builtin/ft_cd.c \
 		./src/builtin/ft_echo.c \
